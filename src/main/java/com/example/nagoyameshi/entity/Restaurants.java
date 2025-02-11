@@ -26,7 +26,7 @@ public class Restaurants {
 	private String name;
 	
 	@Column(name = "image_name")
-	private String imageId;
+	private String imageName;
 	
 	@Column(name = "description")
 	private String description;
@@ -60,7 +60,7 @@ public class Restaurants {
 	
     @ManyToOne
     @JoinColumn(name = "categories_id")
-    private Categories categories;  
+    private Categories categories;
 	
     @ManyToOne
     @JoinColumn(name = "scene_id")

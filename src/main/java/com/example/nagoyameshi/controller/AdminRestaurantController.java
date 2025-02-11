@@ -44,9 +44,9 @@ public class AdminRestaurantController {
     
     @GetMapping("/{id}")
     public String show(@PathVariable(name = "id") Integer id, Model model) {
-    	Restaurants restaurant = restaurantRepository.getReferenceById(id);
+    	Restaurants restaurants = restaurantRepository.getReferenceById(id);
     	
-    	model.addAttribute("restaurant", restaurant);
+    	model.addAttribute("restaurants", restaurants);
     	
     	return "admin/restaurants/show"; //管理者用の店舗詳細ページ
     }
