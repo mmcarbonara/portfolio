@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.nagoyameshi.entity.Restaurants;
+import com.example.nagoyameshi.form.RestaurantRegisterForm;
 import com.example.nagoyameshi.repository.RestaurantRepository;
 
 @Controller
@@ -48,5 +49,11 @@ public class AdminRestaurantController {
     	model.addAttribute("restaurant", restaurant);
     	
     	return "admin/restaurants/show"; //管理者用の店舗詳細ページ
+    }
+    
+    @GetMapping("/register")
+    public String register(Model model) {
+    	model.addAttribute("restaurantRegisterForm", new RestaurantRegisterForm());
+    	return "admin/restaurants/register";  //管理者用の店舗登録ページ　
     }
 }
