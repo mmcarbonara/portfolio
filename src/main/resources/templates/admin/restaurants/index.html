@@ -1,5 +1,5 @@
 <!DOCTYPE html> <!--管理者用の店舗管理ページ編集・削除・登録などができる-->
-<html xmlns:th="https://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
    <head>
 		<div th:replace="~{fragment :: meta}"></div>
 	   
@@ -30,6 +30,10 @@
 							<a th:href="@{/admin/restaurants/register}" class="btn text-white shadow-sm mb-3 nagoyameshi-btn">登録</a> <!--管理者が店舗登録できるページ-->
 						</div>
 						
+						<div th:if="${successMessage}" class="alert alert-info">
+							<span th:text="${successMessage}"></span>
+						</div>
+						
 						<table class="table">
 							<thead>
 							 <tr>
@@ -38,6 +42,7 @@
 								<th scope="col">電話番号</th>
 								<th scope="col">郵便番号</th>
 								<th scope="col">住所</th>
+								<th scope="col"></th>
 								<th scope="col"></th>
 							 </tr>
 							 </thead>
@@ -49,6 +54,24 @@
 									 <td th:text="${restaurants.getPostalCode()}"></td>
 									 <td th:text="${restaurants.getAddress()}"></td>
 									 <td><a th:href="@{/admin/restaurants/__${restaurants.id}__}">詳細</a></td>
+									 <td><a href="#" class="nagoyameshi-link-danger" data-bs-toggle="modal" th:data-bs-target="${'#deleteRestaurantsModal' + restaurants.getId()}">削除</a></td>
+									 
+									 <!--削除用モーダル-->
+									 <div class="modal fade" th:id="${'deleteRestaurantsModal' + restaurants.getId()}" tabindex="-1" th:aria-labelledby="${'deleteRestaurantsModalLabel' + restaurants.getId()}">
+										 <div class="modal-dialog">
+											 <div class="modal-content">
+												 <div class="header">
+													 <h5 class="modal-title" th:id="${'deleteRestaurantsModalLabel' + restaurants.getId()}" th:text="${restaurants.getName() + 'を削除してもよろしいですか？'}"></h5>
+													 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+												 </div>
+												 <div class="modal-footer">
+													<form method="post" th:action="@{/admin/restaurants/__${restaurants.getId()}__/delete}">
+														<button type="submit" class="btn nagoyameshi-btn-danger shadow-sm">削除</button>
+													</form> 
+												 </div>
+											 </div>
+										 </div>
+									 </div>
 								 </tr>
 							 </tbody>
 						</table>

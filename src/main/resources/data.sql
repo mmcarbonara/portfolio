@@ -69,3 +69,22 @@ INSERT IGNORE INTO restaurants (id, name, image_name, description, phone_number,
 INSERT IGNORE INTO restaurants (id, name, image_name, description, phone_number, postal_code, capacity, address, holiday, opening_time, closing_time, lowest_price, highest_price, categories_id, scene_id) VALUES (49, 'バル・エル・ソル', 'photo49.jpg', '名古屋の街中にある本格スペインバル。自家製のパエリアやタパスが人気で、ワインとの相性も抜群。アットホームな雰囲気で、友達や同僚と気軽に立ち寄れる。週末はライブ演奏も楽しめることがある。', '090-1111-1159', '111-1159', 35, '愛知県名古屋市中区栄X-XX-XX', '木', '11:00', '24:00', 2500, 7000, 5, 1);
 INSERT IGNORE INTO restaurants (id, name, image_name, description, phone_number, postal_code, capacity, address, holiday, opening_time, closing_time, lowest_price, highest_price, categories_id, scene_id) VALUES (50, 'タパス・ラ・ヴィーダ', 'photo50.jpg', '本格的なスペイン料理を楽しめるお店。特にシーフードパエリアやサングリアが絶品。落ち着いた雰囲気の店内で、ゆっくり食事を楽しみたい人にぴったり。スペイン直輸入の食材を使った料理が特徴。', '090-1111-1160', '111-1160', 20, '愛知県名古屋市中区栄X-XX-XX', '木', '13:00', '20:00', 3000, 8000, 5, 6);
 
+-- rolesテーブル
+INSERT IGNORE INTO roles (id, name) VALUES (1, 'ROLE_GENERAL');
+INSERT IGNORE INTO roles (id, name) VALUES (2, 'PREMIUM_MEMBER');
+INSERT IGNORE INTO roles (id, name) VALUES (3, 'ROLE_ADMIN');
+
+-- usersテーブル
+INSERT IGNORE INTO users (id, name, furigana, postal_code, address, phone_number, email, password, role_id, enabled) VALUES (1, '山田 太郎', 'ヤマダ タロウ', '101-0022', '東京都千代田区神田練塀町300番地', '090-1234-5678', 'taro.nagoyameshi@example.com', '$2a$10$2JNjTwZBwo7fprL2X4sv.OEKqxnVtsVQvuXDkI8xVGix.U3W5B7CO', 1, true);
+INSERT IGNORE INTO users (id, name, furigana, postal_code, address, phone_number, email, password, role_id, enabled) VALUES (2, '山田 花子', 'ヤマダ ハナコ', '101-0022', '東京都千代田区神田練塀町300番地', '090-1234-5678', 'hanako.nagoyameshi@example.com', '$2a$10$2JNjTwZBwo7fprL2X4sv.OEKqxnVtsVQvuXDkI8xVGix.U3W5B7CO', 2, true);
+INSERT IGNORE INTO users (id, name, furigana, postal_code, address, phone_number, email, password, role_id, enabled) VALUES (3, '山田　義勝', 'ヤマダ ヨシカツ', '638-0644', '奈良県五條市西吉野町湯川X-XX-XX', '090-1234-5678', 'yoshikatsu.nagoyameshi@example.com', 'password', 1, false);
+INSERT IGNORE INTO users (id, name, furigana, postal_code, address, phone_number, email, password, role_id, enabled) VALUES (4, '山田 幸美', 'ヤマダ サチミ', '342-0006', '埼玉県吉川市南広島X-XX-XX', '090-1234-5678', 'sachimi.nagoyameshi@example.com', 'password', 1, false);
+INSERT IGNORE INTO users (id, name, furigana, postal_code, address, phone_number, email, password, role_id, enabled) VALUES (5, '山田 雅', 'ヤマダ ミヤビ', '527-0209', '滋賀県東近江市佐目町X-XX-XX', '090-1234-5678', 'miyabi.nagoyameshi@example.com', 'password', 1, false);
+INSERT IGNORE INTO users (id, name, furigana, postal_code, address, phone_number, email, password, role_id, enabled) VALUES (6, '山田 正保', 'ヤマダ マサヤス', '989-1203', '宮城県柴田郡大河原町旭町X-XX-XX', '090-1234-5678', 'masayasu.nagoyameshi@example.com', 'password', 1, false);
+INSERT IGNORE INTO users (id, name, furigana, postal_code, address, phone_number, email, password, role_id, enabled) VALUES (7, '山田 真由美', 'ヤマダ マユミ', '951-8015', '新潟県新潟市松岡町X-XX-XX', '090-1234-5678', 'mayumi.nagoyameshi@example.com', 'password', 1, false);
+INSERT IGNORE INTO users (id, name, furigana, postal_code, address, phone_number, email, password, role_id, enabled) VALUES (8, '山田 安民', 'ヤマダ ヤスタミ', '241-0033', '神奈川県横浜市旭区今川町X-XX-XX', '090-1234-5678', 'yasutami.nagoyameshi@example.com', 'password', 1, false);
+INSERT IGNORE INTO users (id, name, furigana, postal_code, address, phone_number, email, password, role_id, enabled) VALUES (9, '山田 章緒', 'ヤマダ アキオ', '739-2103', '広島県東広島市高屋町宮領X-XX-XX', '090-1234-5678', 'akio.nagoyameshi@example.com', 'password', 1, false);
+INSERT IGNORE INTO users (id, name, furigana, postal_code, address, phone_number, email, password, role_id, enabled) VALUES (10, '山田 祐子', 'ヤマダ ユウコ', '601-0761', '京都府南丹市美山町高野X-XX-XX', '090-1234-5678', 'yuko.nagoyameshi@example.com', 'password', 1, false);
+INSERT IGNORE INTO users (id, name, furigana, postal_code, address, phone_number, email, password, role_id, enabled) VALUES (11, '山田 秋美', 'ヤマダ アキミ', '606-8235', '京都府京都市左京区田中西春菜町X-XX-XX', '090-1234-5678', 'akimi.nagoyameshi@example.com', 'password', 1, false);
+INSERT IGNORE INTO users (id, name, furigana, postal_code, address, phone_number, email, password, role_id, enabled) VALUES (12, '山田 信平', 'ヤマダ シンペイ', '673-1324', '兵庫県加東市新定X-XX-XX', '090-1234-5678', 'shinpei.nagoyameshi@example.com', 'password', 1, false);
+

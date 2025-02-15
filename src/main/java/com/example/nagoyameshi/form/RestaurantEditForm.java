@@ -1,4 +1,4 @@
-package com.example.nagoyameshi.form; //管理者が店舗登録できるページ
+package com.example.nagoyameshi.form; //管理者が店舗編集できるページ
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -7,10 +7,15 @@ import com.example.nagoyameshi.entity.Categories;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-public class RestaurantRegisterForm {
+@AllArgsConstructor
+public class RestaurantEditForm {
+	@NotNull
+	private Integer id;
+	
 	@NotBlank(message = "店舗名を入力してください")
 	private String name;
 	
@@ -45,4 +50,3 @@ public class RestaurantRegisterForm {
 	@NotNull(message = "カテゴリを入力してください")
 	private Categories categories;
 }
-

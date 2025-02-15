@@ -1,5 +1,5 @@
 <!DOCTYPE html><!--管理者用の店舗詳細ページ：要訂正箇所あり-->
-<html xmlns:th="https://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	<head>
 		<div th:replace="~{fragment :: meta}"></div>
 		
@@ -27,7 +27,7 @@
 							
 							<div class="d-flex justify-content-end align-items-end mb-3">
 								<div>
-									<a href="#">編集</a>
+									<a th:href="@{/admin/restaurants/__${restaurants.getId()}__/edit}">編集</a>
 								</div>
 							</div>
 							
