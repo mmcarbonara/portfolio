@@ -2,6 +2,8 @@ package com.example.nagoyameshi.controller;   //管理者用の各種店舗ペ�
 
 
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -18,9 +20,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.nagoyameshi.entity.Categories;
 import com.example.nagoyameshi.entity.Restaurants;
 import com.example.nagoyameshi.form.RestaurantEditForm;
 import com.example.nagoyameshi.form.RestaurantRegisterForm;
+import com.example.nagoyameshi.repository.CategoriesRepository;
 import com.example.nagoyameshi.repository.RestaurantRepository;
 import com.example.nagoyameshi.service.RestaurantService;
 
@@ -29,10 +33,12 @@ import com.example.nagoyameshi.service.RestaurantService;
 public class AdminRestaurantController {
 	private final RestaurantRepository restaurantRepository;
 	private final RestaurantService restaurantService;
+	private final CategoriesRepository categoriesRepository;
 	
-	public AdminRestaurantController(RestaurantRepository restaurantRepository, RestaurantService restaurantService) {
+	public AdminRestaurantController(RestaurantRepository restaurantRepository, RestaurantService restaurantService, CategoriesRepository categoriesRepository) {
 		this.restaurantRepository = restaurantRepository; 
 		this.restaurantService = restaurantService;
+		this.categoriesRepository = categoriesRepository;
 	}
 	
     @GetMapping
@@ -81,10 +87,12 @@ public class AdminRestaurantController {
     @GetMapping("/{id}/edit")  //管理者が店舗編集するページ用のメソッドの追加
     public String edit(@PathVariable(name ="id") Integer id, Model model) {
     	Restaurants restaurants = restaurantRepository.getReferenceById(id);
+    	List<Categories> categoriesList = categoriesRepository.findAll();
     	String imageName = restaurants.getImageName();
     	RestaurantEditForm restaurantEditForm = new RestaurantEditForm(restaurants.getId(), restaurants.getName(), null, restaurants.getDescription(), restaurants.getLowestPrice(), restaurants.getOpeningTime(), restaurants.getCapacity(), restaurants.getHoliday(), restaurants.getPhoneNumber(), restaurants.getPostalCode(), restaurants.getAddress(), restaurants.getCategories());
     	
     	model.addAttribute("imageName", imageName);
+    	model.addAttribute("categoriesList", categoriesList);
     	model.addAttribute("restaurantEditForm", restaurantEditForm);
     	
     	return "admin/restaurants/edit";

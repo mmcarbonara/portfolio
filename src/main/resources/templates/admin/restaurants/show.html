@@ -3,7 +3,7 @@
 	<head>
 		<div th:replace="~{fragment :: meta}"></div>
 		
-        <div replace="~{fragment :: styles}"></div>
+        <div th:replace="~{fragment :: styles}"></div>
        
        <title>店舗詳細</title>
 	</head>
@@ -136,7 +136,7 @@
 										<span th:text="${restaurants.getAddress()}"></span>
 									</div>
 								</div>
-								
+		
 								<div class="row pb-2 mb-2 border-bottom">
 									<div class="col-4">
 										<span class="fw-bold">カテゴリ<span>
@@ -145,7 +145,7 @@
 									<div class="col">
 										<span th:text="${restaurants.getCategories()}"></span>
 									</div>
-								</div>								
+								</div>							
 							</div>
 							
 						</div>
