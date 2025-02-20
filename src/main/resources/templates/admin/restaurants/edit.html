@@ -138,7 +138,7 @@
 										<label for="categories" class="col-label text-md-left fw-bold">カテゴリ</label>
 									</div>
 									<div class="col-md-8">
-										<div th:if="${#fields.hasErrors('categories')}" class="text-danger small mb-2" th:errors="*{categories}"></div>
+										<div th:if="${#fields.hasErrors('categories')}" class="text-danger small mb-2" th:errors="*{categoryId}"></div>
 										<select class="dropdown form-control">	
 		                                    <option th:value="0"></option>
 											<option th:each="category : ${categoriesList}" th:value="${category.id}" th:text="${category.name}"></option>

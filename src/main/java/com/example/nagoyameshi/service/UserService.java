@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.nagoyameshi.entity.Role;
 import com.example.nagoyameshi.entity.User;
 import com.example.nagoyameshi.form.SignupForm;
+import com.example.nagoyameshi.form.UserEditForm;
 import com.example.nagoyameshi.repository.RoleRepository;
 import com.example.nagoyameshi.repository.UserRepository;
 
@@ -36,10 +37,24 @@ public User create(SignupForm signupForm) {
 	user.setEmail(signupForm.getEmail());
 	user.setPassword(passwordEncoder.encode(signupForm.getPassword()));
 	user.setRole(role);
-	user.setEnabled(true);
+	user.setEnabled(false);
 	
 	return userRepository.save(user);
 }
+
+@Transactional  //会員情報編集ページ
+public void update(UserEditForm userEditForm) {
+	User user = userRepository.getReferenceById(userEditForm.getId());
+	
+	user.setName(userEditForm.getName());
+	user.setFurigana(userEditForm.getFurigana());
+	user.setPhoneNumber(userEditForm.getPhoneNumber());
+	user.setPostalCode(userEditForm.getPostalCode());
+	user.setAddress(userEditForm.getAddress());
+	user.setEmail(userEditForm.getEmail());
+	
+	userRepository.save(user);
+	}
 	
 	//メールアドレスが登録済か確認する
     public boolean isEmailRegistered(String email) {
@@ -50,5 +65,18 @@ public User create(SignupForm signupForm) {
     //パスワードとパスワード（確認用）の入力が一致するかどうかチェックする
     public boolean isSamePassword(String password, String passwordConfirmation) {
     	return password.equals(passwordConfirmation);
+    }
+    
+    //ユーザーを有効にする。認証に成功した時に実行するメソッド
+    @Transactional
+    public void enableUser(User user) {
+    	user.setEnabled(true);
+    	userRepository.save(user);
+    }
+    
+    //メールアドレスが変更されたかどうか確認する
+    public boolean isEmailChanged(UserEditForm userEditForm) {
+    	User currentUser = userRepository.getReferenceById(userEditForm.getId());
+    	return !userEditForm.getEmail().equals(currentUser.getEmail());
     }
 }

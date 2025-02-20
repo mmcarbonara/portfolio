@@ -1,0 +1,131 @@
+<!DOCTYPE html><!--店舗一覧ページあとで検索フォームの内容も追記する(27章)検索はカテゴリと店舗名-->
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"> 
+	<head>
+		<div th:replace="~{fragment :: meta}"></div>
+		
+		<div th:replace="~{fragment :: styles}"></div>
+		
+		<title>店舗一覧</title>
+	</head>
+    <body>
+		<div class="nagoyameshi-wrapper">
+			<!--ヘッダー-->
+			<div th:replace="~{fragment :: header}"></div>
+			
+			<main>
+				<div class="container nagoyameshi-container pb-5">
+					<div class="row justify-content-center">
+						<nav class="my-3" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+							<ol class="breadcrumb mb-0">
+								<li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>
+								<li class="breadcrumb-item active" aria-current="page">会員一覧</li>
+							</ol>
+						</nav>
+						
+						<div class="col-xl-3 col-lg-4 col-md-12">
+							<form method="get" th:action="@{/restaurants}" class="w-100 mb-3">
+								<div class="input-group">
+									<input type="text" class="form-control" name="keyword" th:value="${keyword}" placeholder="キーワード">
+									<button type="submit" class="btn text-white shadow-sm nagoyameshi-btn">検索</button>
+								</div>
+							</form>
+							
+							<div class="card mb-3">
+								<div class="card-header"><!--カテゴリから検索できるようにしたい-->
+									カテゴリから探す
+								</div>
+								<div class="card-body">
+									<form method="get" th:action="@{/restaurants}" class="w-100">
+										<div class="form-group mb-3">
+											<select class="form-control form-select" name="categories">
+											 	<option value="" hidden>選択してください</option>
+											 	
+											 	<!--カテゴリ検索項目-->
+													 <option value="1"　th:selected="${categories == 1}">和食</option>
+													 <option value="2"　th:selected="${categories == 2}">韓国料理</option>
+													 <option value="3"　th:selected="${categories == 3}">中華料理</option>
+													 <option value="4"　th:selected="${categories == 4}">イタリア料理</option>
+													 <option value="5"　th:selected="${categories == 5}">エスニック料理</option>
+													 <option value="6"　th:selected="${categories == 6}">洋食</option>
+													 <option value="7"　th:selected="${categories == 7}">カフェ</option>
+													 <option value="8"　th:selected="${categories == 8}">アフタヌーンティー</option>
+													 <option value="9"　th:selected="${categories == 9}">ビュッフェ</option>										 												 												 												 												 												 												 												 
+											 </select>		
+										</div>
+										<div class="form-group">
+											<button type="submit" class="btn text-white shadow-sm w-100 nagoyameshi-btn">検索</button>
+										</div>
+									</form>
+								</div>
+							</div>
+							
+							<div class="col">
+                           <div class="d-flex justify-content-between flex-wrap">                                
+                               <p th:if="${restaurantPage.getTotalPages() > 1}" class="fs-5 mb-3" th:text="${'検索結果：' + restaurantPage.getTotalElements() + '件' + '（' + (restaurantPage.getNumber() + 1) + ' / ' + restaurantPage.getTotalPages() + ' ページ）'}"></p> 
+                               <p th:unless="${restaurantPage.getTotalPages() > 1}" class="fs-5 mb-3" th:text="${'検索結果：' + restaurantPage.getTotalElements() + '件'}"></p>                                 
+                           </div>  
+								
+								<div class="mb-3" th:each="restaurants : ${restaurantPage}">
+									<a th:href="@{/restaurants/__${restaurants.getId()}__}" class="link-dark nagoyameshi-card-link">
+										<div class="card h-100">
+											<div class="row g-0">
+												<div class="col-md-4">
+													<img th:if="${restaurants.getImageName()}" th:src="@{/storage/__${restaurants.getImageName()}__}" class="card-img-top nagoyemeshi-horizontal-card-image" alt="店舗画像">
+													<img th:unless="${restaurants.getImageName()}" th:src="@{/images/noImage.png}" class="card-img-top nagoyamshi-horizontal-card-image" alt="NO IMAGE">
+												</div>
+												<div class="col-md-8">
+													<div class="card-body">
+														<h3 class="card-title mb-3" th:text="${restaurants.getName()}"></h3>
+														
+														<hr class="mb-3">
+														
+														<p class="card-text mb-2">
+															<span th:text="${restaurants.getDescription()}"></span>
+														</p>
+														
+														<p class="card-text mb-2">
+															<small class="text-muted" th:text="${'〒' + restaurants.getPostalCode()}"></small>
+															<small class="text-muted" th:text="${restaurants.getAddress()}"></small>
+														</p>
+														
+														<p class="card-text">
+															<span th:text="${#numbers.formatInteger(restaurants.getLowestPrice(),1,'COMMA') + '円'}"></span>
+														</p>												
+													</div>
+												</div>
+											</div>
+										</div>
+									</a>								
+								</div>
+								
+								<!--ページネーション-->
+								<div th:if="${restaurantPage.getTotalPages() > 1}" class="d-flex justify-content-center">
+									<nav aria-label="店舗一覧ページ">
+										<ul class="pagination">
+											<li class="page-item">
+												<span th:if="${restaurantPage.isFirst()}" class="page-link disabled">前</span>
+												<a th:unless="${restaurantPage.isFirst()}" th:href="@{/restaurants(page = ${restaurantPage.getNumber() -1}, keyword = ${keyword}, categories = ${categories})}" class="page-link nagoymeshi-page-link">前</a>
+											</li>
+											<li th:each="i : ${#numbers.sequence(0, restaurantPage.getTotalPages() -1)}" class="page-item">
+												<span th:if="${i == restaurantPage.getNumber()}" class="page-link active nagoyameshi-active" th:text="${i + 1}"></span>
+												<a th:unless="${i == restaurantPage.getNumber()}" th:href="@{/restaurants(page = ${i}, keyword = ${keyword}, categories = ${categories})}" class="page-link nagoyamshi-page-link" th:text="${i + 1}"></a>
+											</li>
+											<li class="page-item">
+												<span th:if="${restaurantPage.isLast()}" class="page-link disabled">次</span>
+												<a th:unless="${restaurantPage.isLast()}" th:href="@{/restaurants(page = ${restaurantPage.getNumber() + 1}, keyword = ${keyword}, categories = ${categories})}" class="page-link nagoyameshi-page-link">次</a>
+											</li>
+										</ul>
+									</nav>
+								</div>
+						</div>
+					</div>
+				</div>
+			</main>
+			
+			<!--フッター-->
+			<div th:replace="~{fragment :: footer}"></div>
+		</div>
+		
+		<div th:replace="~{fragment :: scripts}"></div>
+	</body>
+</html>
