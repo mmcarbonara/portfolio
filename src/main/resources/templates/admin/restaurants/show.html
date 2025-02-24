@@ -1,4 +1,4 @@
-<!DOCTYPE html><!--管理者用の店舗詳細ページ：要訂正箇所あり-->
+<!DOCTYPE html><!--管理者用の店舗詳細ページ-->
 <html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	<head>
 		<div th:replace="~{fragment :: meta}"></div>
@@ -69,11 +69,11 @@
 								
 								<div class="row pb-2 mb-2 border-bottom">
 									<div class="col-4">
-										<span class="fw-bold">価格帯<span><!--priceに変更してもいいのかも?-->
+										<span class="fw-bold">価格帯<span>
 									</div>
 									
 									<div class="col">
-										<span th:text="${#numbers.formatInteger(restaurants.getLowestPrice(), 1, 'COMMA') + '円〜' + #numbers.formatInteger(restaurants.getHighestPrice(), 1, 'COMMA') + '円'}"></span><!--ここはあとで訂正する-->
+										<span th:text="${#numbers.formatInteger(restaurants.getPrice(), 1, 'COMMA') + '円'}"></span>
 									</div>
 								</div>
 
@@ -83,7 +83,7 @@
 									</div>
 									
 									<div class="col">
-										<span th:text="${restaurants.getOpeningTime() + '時から' + restaurants.getOpeningTime() + '時まで'}"></span> <!--closingtimeは必要か？時間の取得はこれでいいのか-->
+										<span th:text="${restaurants.getOpeningTime() + 'から' + restaurants.getClosingTime() + 'まで'}"></span> 
 									</div>
 								</div>																								
 
@@ -143,7 +143,7 @@
 									</div>
 									
 									<div class="col">
-										<span th:text="${restaurants.getCategories()}"></span>
+										<span th:text="${restaurants.getCategories().getName()}"></span>
 									</div>
 								</div>							
 							</div>

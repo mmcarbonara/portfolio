@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html><!--管理者が編集するページ-->
 <html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	<head>
 		<div th:replace="~{fragment :: meta}"></div>
@@ -65,21 +65,31 @@
 								
 								<div class="form-group row mb-3">
 									<div class="col-md-4">
-										<label for="lowestPrice" class="col-label text-md-left fw-bold">店舗料金(単位：円)</label>
+										<label for="price" class="col-label text-md-left fw-bold">店舗料金(単位：円)</label>
 									</div>
 									<div class="col-md-8">
-										<div th:if="${#fields.hasErrors('lowestPrice')}" class="text-danger small mb-2" th:errors="*{lowestPrice}"></div>
-										<input type="number" class="form-control" th:field="*{lowestPrice}">
+										<div th:if="${#fields.hasErrors('price')}" class="text-danger small mb-2" th:errors="*{price}"></div>
+										<input type="number" class="form-control" th:field="*{price}">
 									</div>
 								</div>
 								
 								<div class="form-group row mb-3">
 									<div class="col-md-4">
-										<label for="openingTime" class="col-label text-md-left fw-bold">営業時間</label>
+										<label for="openingTime" class="col-label text-md-left fw-bold">開店時間</label>
 									</div>
 									<div class="col-md-8">
 										<div th:if="${#fields.hasErrors('openingTime')}" class="text-danger small mb-2" th:errors="*{openingTime}"></div>
 										<input type="text" class="form-control" th:field="*{openingTime}"></input>
+									</div>
+								</div>
+									
+								<div class="form-group row mb-3">
+									<div class="col-md-4">
+										<label for="closingTime" class="col-label text-md-left fw-bold">閉店時間</label>
+									</div>
+									<div class="col-md-8">
+										<div th:if="${#fields.hasErrors('closingTime')}" class="text-danger small mb-2" th:errors="*{closingTime}"></div>
+										<input type="text" class="form-control" th:field="*{closingTime}"></input>
 									</div>
 								</div>
 
@@ -138,8 +148,8 @@
 										<label for="categories" class="col-label text-md-left fw-bold">カテゴリ</label>
 									</div>
 									<div class="col-md-8">
-										<div th:if="${#fields.hasErrors('categories')}" class="text-danger small mb-2" th:errors="*{categoryId}"></div>
-										<select class="dropdown form-control">	
+										<div th:if="${#fields.hasErrors('categories')}" class="text-danger small mb-2" th:errors="*{categories}"></div>
+										<select class="dropdown form-control"　th:field="*{categories}">	
 		                                    <option th:value="0"></option>
 											<option th:each="category : ${categoriesList}" th:value="${category.id}" th:text="${category.name}"></option>
 										</select>

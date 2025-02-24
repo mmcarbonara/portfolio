@@ -1,4 +1,4 @@
-<!DOCTYPE html><!--ログイン画面-->
+<!DOCTYPE html><!--ログイン画面--><!--トップページの表示-->
 <html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	<head>
 		<div th:replace="~{fragment :: meta}"></div>
@@ -11,6 +11,7 @@
 			<div class="nagoyameshi-wrapper">
 				<!--ヘッダー-->
 				<div th:replace="~{fragment :: header}"></div>
+				<img th:src="@{/images/topImage.jpeg}" class="nagoyameshi-topimage" alt="トップページ画像">
 				
 				<main>
 					<div class="conteiner pt-4 pb-5 nagoyameshi-container">
@@ -25,6 +26,34 @@
 						<div th:if="${successMessage}" class="alert alert-info">
 							<span th:text="${successMessage}"></span>  
 						</div>
+						
+			            <!--検索ボックス-->
+						<div class="text-left">
+							<form method="get" th:action="@{/restaurants}" class="mb-5 nagoymeshi-search-form">
+								<div class="input-group">
+									<input type="text" class="form-control" name="keyword" th:value="${keyword}" placeholder="キーワード">
+									<button type="submit" class="btn text-black shadow-sm nagoymeshi-btn">検索</button>
+								</div>
+							</form>
+						</div>
+						
+						<!--カテゴリの表示-->
+						<h2 class="text-left mb-3">カテゴリから探す</h2>
+						<div class="row row-cols-lg row-cols-2 g-3 mb-5">
+							<div class="col" th:each="categories : ${categories}"></div>
+						</div>
+						
+						<div>
+						  <div class="nagoyameshi-category-container">
+							   <th:block th:each="category : ${categoriesList}">
+								   <div class="nagoyamshi-category-item">
+									<h2 th:text="${category.name}" class="nagoyameshi-categoryName">カテゴリ名</h2>
+   		<!--カテゴリ用の画像表示--> 	<a th:href="@{admin/restaurants}"><img th:src="@{/images/category/__${category.getId()}__.jpeg}" class="nagoyameshi-categoryImg" alt="${category.name}"></a>
+   								   </div>
+								</th:block>
+							</div>
+						</div>
+						
 					</div>
 				</main>
 				

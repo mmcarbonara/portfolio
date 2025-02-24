@@ -46,7 +46,7 @@ public class AdminRestaurantController {
     	Page<Restaurants> restaurantPage;  
     	
     	if (keyword != null && !keyword.isEmpty()) {
-    		restaurantPage = restaurantRepository.findByNameLike("%" + keyword + "%" ,pageable); //エラーになるのはデータの中身がないから？
+    		restaurantPage = restaurantRepository.findByNameLike("%" + keyword + "%" ,pageable); 
     	} else {
     		restaurantPage = restaurantRepository.findAll(pageable);
     	}
@@ -89,7 +89,21 @@ public class AdminRestaurantController {
     	Restaurants restaurants = restaurantRepository.getReferenceById(id);
     	List<Categories> categoriesList = categoriesRepository.findAll();
     	String imageName = restaurants.getImageName();
-    	RestaurantEditForm restaurantEditForm = new RestaurantEditForm(restaurants.getId(), restaurants.getName(), null, restaurants.getDescription(), restaurants.getLowestPrice(), restaurants.getOpeningTime(), restaurants.getCapacity(), restaurants.getHoliday(), restaurants.getPhoneNumber(), restaurants.getPostalCode(), restaurants.getAddress(), restaurants.getCategories());
+    	RestaurantEditForm restaurantEditForm = new RestaurantEditForm(
+    			restaurants.getId(), 
+    			restaurants.getName(), 
+    			null, 
+    			restaurants.getDescription(), 
+    			restaurants.getPrice(), 
+    			restaurants.getOpeningTime(), 
+    			restaurants.getClosingTime(),
+    			restaurants.getCapacity(), 
+    			restaurants.getHoliday(), 
+    			restaurants.getPhoneNumber(), 
+    			restaurants.getPostalCode(), 
+    			restaurants.getAddress(), 
+    			restaurants.getCategories()
+    			);
     	
     	model.addAttribute("imageName", imageName);
     	model.addAttribute("categoriesList", categoriesList);
@@ -97,6 +111,7 @@ public class AdminRestaurantController {
     	
     	return "admin/restaurants/edit";
     }
+ 
     
     @PostMapping("/{id}/update") //管理者が店舗情報の更新するページ用のメソッド追加
     public String update(@ModelAttribute @Validated RestaurantEditForm restaurantEditForm, BindingResult bindingResult, RedirectAttributes redirectAttributes) {

@@ -11,9 +11,9 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "scene")
+@Table(name = "company")
 @Data
-public class Scene {
+public class Company {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -22,9 +22,33 @@ public class Scene {
 	@Column(name = "name")
 	private String name;  
 	
+	@Column(name = "address")
+	private String address;
+	
+	@Column(name = "representative")
+	private String representative;
+	
+	@Column(name = "capital")
+	private String capital;
+	
+	@Column(name = "business")
+	private String business;
+	
+	@Column(name = "establishment")
+	private String establishment;
+	
+	@Column(name = "number_of_employees")
+	private Integer numberOfEmployees;
+	
 	@Column(name = "created_at", insertable = false, updatable = false)
 	private Timestamp createdAt;
 	
 	@Column(name = "updated_at", insertable = false, updatable = false)
     private Timestamp updatedAt;
+
 }
+
+
+
+
+

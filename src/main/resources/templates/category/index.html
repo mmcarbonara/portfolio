@@ -1,11 +1,11 @@
-<!DOCTYPE html><!--店舗一覧ページ：キーワード・予算・カテゴリで検索できる-->
+<!DOCTYPE html><!--トップページからカテゴリ別に表示されるページ-->
 <html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"> 
 	<head>
 		<div th:replace="~{fragment :: meta}"></div>
 		
 		<div th:replace="~{fragment :: styles}"></div>
 		
-		<title>店舗一覧</title>
+		<title>カテゴリ一覧</title>
 	</head>
     <body>
 		<div class="nagoyameshi-wrapper">
@@ -18,70 +18,39 @@
 						<nav class="my-3" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
 							<ol class="breadcrumb mb-0">
 								<li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>
-								<li class="breadcrumb-item active" aria-current="page">店舗一覧</li>
+								<li class="breadcrumb-item active" aria-current="page">カテゴリ一覧</li>
 							</ol>
 						</nav>
 						
-						<!--キーワードで検索-->
 						<div class="col-xl-3 col-lg-4 col-md-12">
-							<form method="get" th:action="@{/restaurants}" class="w-100 mb-3">
+							<form method="get" th:action="@{/category}" class="w-100 mb-3">
 								<div class="input-group">
 									<input type="text" class="form-control" name="keyword" th:value="${keyword}" placeholder="キーワード">
 									<button type="submit" class="btn text-white shadow-sm nagoyameshi-btn">検索</button>
 								</div>
 							</form>
 							
-							<!--値段で検索-->
 							<div class="card mb-3">
 								<div class="card-header">
-									最低価格から探す
+									カテゴリから探す
 								</div>
 								<div class="card-body">
-									<form method="get" th:action="@{/restaurants}" class="w-100">
-										<div class="form-group mb-3">
-											<select class="form-control form-select" name="price">
-												<option value="" hidden>選択してください</option>
-												<option value="1000" th:selected="${price == 1000}">1000円以内</option>
-												<option value="2000" th:selected="${price == 2000}">2000円以内</option>
-												<option value="3000" th:selected="${price == 3000}">3000円以内</option>
-												<option value="4000" th:selected="${price == 4000}">4000円以内</option>
-												<option value="5000" th:selected="${price == 5000}">5000円以内</option>
-											</select>
-										</div>
+									<form method="get" th:action="@{/category}" class="w-100">
+ 									 <a th:href="@{/restaurants?categoriesId=1}"><img th:src="@{/images/category/1.png}" alt="和食"></a>
+   									 <a th:href="@{/restaurants?categoriesId=2}"><img th:src="@{/images/category/2.png}" alt="韓国料理"></a>
+  								     <a th:href="@{/restaurants?categoriesId=3}"><img th:src="@{/images/category/3.png}" alt="中華料理"></a>
+   									 <a th:href="@{/restaurants?categoriesId=4}"><img th:src="@{/images/category/4.png}" alt="イタリア料理"></a>
+  								     <a th:href="@{/restaurants?categoriesId=5}"><img th:src="@{/images/category/5.png}" alt="エスニック料理"></a>
+  								     <a th:href="@{/restaurants?categoriesId=6}"><img th:src="@{/images/category/6.png}" alt="洋食"></a>
+   									 <a th:href="@{/restaurants?categoriesId=7}"><img th:src="@{/images/category/7.png}" alt="その他"></a>
+									 </form>
+								  </div>
+
+										
 										<div class="form-group">
 											<button type="submit" class="btn text-white shadow-sm w-100 nagoyameshi-btn">検索</button>
-										</div>
-									</form>
-								</div>
-							</div>
-						 
-						
-						 <!--カテゴリから探す-->	
-						 <div class="card mb-3">
-							 <div class="card-header">
-								 カテゴリから探す
-							 </div>
-					         <div class="card-body">
-								 <form method="get" th:action="@{/restaurants}" class="w-100">
-									 <div class="form-group mb-3">
-										 <select class="form-control form-select" name="categoriesId">
-											 <option value="" hidden>選択してください</option>
-											 <option value="1" th:selected="${categoriesId ==1}">和食</option>
-											 <option value="2" th:selected="${categoriesId ==2}">韓国料理</option>
-											 <option value="3" th:selected="${categoriesId ==3}">中華料理</option>
-											 <option value="4" th:selected="${categoriesId ==4}">イタリア料理</option>
-											 <option value="5" th:selected="${categoriesId ==5}">エスニック料理</option>
-											 <option value="6" th:selected="${categoriesId ==6}">洋食</option>
-											 <option value="7" th:selected="${categoriesId ==7}">その他</option>
-										 </select>
-									 </div>
-									 <div class="form-group">
-										 <button type="submit" class="btn text-white shadow-sm w-100 nagoyameshi-btn">検索</button>
-									 </div>
-								 </form>
-							 </div>
-						 </div>
-					</div>
+										</div>									
+							  </div>
 							
 						<div class="col">
                            <div class="d-flex justify-content-between flex-wrap">                                
@@ -89,12 +58,12 @@
                                <p th:unless="${restaurantPage.getTotalPages() > 1}" class="fs-5 mb-3" th:text="${'検索結果：' + restaurantPage.getTotalElements() + '件'}"></p>                                 
                            </div>  
 								
-								<div class="mb-3" th:each="restaurants : ${restaurantPage}">
-									<a th:href="@{/restaurants/__${restaurants.getId()}__}" class="link-dark nagoyameshi-card-link">
+								<div class="mb-3" th:each="categories : ${restaurantPage}">
+									<a th:href="@{/categories/__${categories.getId()}__}" class="link-dark nagoyameshi-card-link">
 										<div class="card h-100">
 											<div class="row g-0">
 												<div class="col-md-4">
-													<img th:if="${restaurants.getImageName()}" th:src="@{/storage/__${restaurants.getImageName()}__}" class="card-img-top nagoyemeshi-horizontal-card-image" alt="店舗画像">
+													<img th:if="${categories.getImageName()}" th:src="@{/categories/__${categories.getImageName()}__}" class="card-img-top nagoyemeshi-horizontal-card-image" alt="カテゴリ画像">
 													<img th:unless="${restaurants.getImageName()}" th:src="@{/images/noImage.png}" class="card-img-top nagoyamshi-horizontal-card-image" alt="NO IMAGE">
 												</div>
 												<div class="col-md-8">
@@ -113,7 +82,7 @@
 														</p>
 														
 														<p class="card-text">
-															<span th:text="${#numbers.formatInteger(restaurants.getPrice(),1,'COMMA') + '円'}"></span>
+															<span th:text="${#numbers.formatInteger(restaurants.getLowestPrice(),1,'COMMA') + '円'}"></span>
 														</p>												
 													</div>
 												</div>

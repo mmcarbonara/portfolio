@@ -1,0 +1,30 @@
+<!DOCTYPE html><!--ログイン画面に表示する会社概要-->
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	<head>
+		<div th:replace="~{fragment :: meta}"></div>
+		
+		<div th:replace="~{fragment :: styles}"></div>
+		
+		<title>会社概要</title>
+	</head>
+	<body>
+		<div class="nagoyameshi-wrapper">
+			<!--ヘッダー-->
+			<div th:replace="~{fragment :: header}"></div>
+			
+			<main>
+				<div class="container nagoyameshi-container pb-5">
+					<div class="row justify-content-center">
+						<nav class="my-3" style="--bsbreadcrumb-divider: '>'" aria-label="breadcrumb">
+							<ol class="breadcrumb-item">
+								<li class="breadcrumb-item"><a th:href="@{/}">ホーム</a>
+								<li class="breadcrumb-item active" aria-current="page">会社概要</li>
+							</ol>
+						</nav>
+						
+						
+					</div>
+				</div>
+			</main>
+		</div>
+	</body>

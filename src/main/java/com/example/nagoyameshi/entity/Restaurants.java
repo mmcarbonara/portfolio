@@ -49,22 +49,16 @@ public class Restaurants {
 	@Column(name = "opening_time")
 	private String openingTime;
 	
-	@Column(name = "closing_time")
+	@Column(name = "closing_time", insertable = false)
 	private String closingTime;
 	
-	@Column(name = "lowest_price")
-	private Integer lowestPrice;
-	
-	@Column(name = "highest_price")
-	private Integer highestPrice;
+	@Column(name = "price")
+	private Integer price;
 	
     @ManyToOne
     @JoinColumn(name = "categories_id")
     private Categories categories;
 	
-    @ManyToOne
-    @JoinColumn(name = "scene_id")
-    private Scene scene;  
     
 	@Column(name = "created_at", insertable = false, updatable = false)
 	private Timestamp createdAt;

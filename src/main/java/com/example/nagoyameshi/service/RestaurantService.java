@@ -38,7 +38,7 @@ public void create(RestaurantRegisterForm restaurantRegisterForm) { //店舗登�
 	
 	restaurants.setName(restaurantRegisterForm.getName());
 	restaurants.setDescription(restaurantRegisterForm.getDescription());
-	restaurants.setLowestPrice(restaurantRegisterForm.getLowestPrice());
+	restaurants.setPrice(restaurantRegisterForm.getPrice());
 	restaurants.setOpeningTime(restaurantRegisterForm.getOpeningTime());
 	restaurants.setCapacity(restaurantRegisterForm.getCapacity());
 	restaurants.setHoliday(restaurantRegisterForm.getHoliday());
@@ -65,7 +65,7 @@ public void update(RestaurantEditForm restaurantEditForm) { //店舗更新
 	
 	restaurants.setName(restaurantEditForm.getName());
 	restaurants.setDescription(restaurantEditForm.getDescription());
-	restaurants.setLowestPrice(restaurantEditForm.getLowestPrice());
+	restaurants.setPrice(restaurantEditForm.getPrice());
 	restaurants.setOpeningTime(restaurantEditForm.getOpeningTime());
 	restaurants.setCapacity(restaurantEditForm.getCapacity());
 	restaurants.setHoliday(restaurantEditForm.getHoliday());
