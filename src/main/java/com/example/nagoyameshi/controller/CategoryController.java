@@ -31,10 +31,10 @@ public class CategoryController {
 @GetMapping("/search/{id}") //カテゴリ別で検索
 	 public String index(@PathVariable(name = "id") Integer id,Model model, @PageableDefault(page = 0,size = 10, sort = "id", direction = Direction.ASC) Pageable pageable) {
 				 List<Categories> categoriesList = categoriesRepository.findAll();  //全てのカテゴリを取得
-				 Page<Restaurants> restaurantList = restaurantRepository.findByCategoriesId(id, pageable); //レストランの情報取得
+		         Page<Restaurants> restaurantList = restaurantRepository.findByCategoriesId(id, pageable); //レストランの情報取得
 				 
 			   	model.addAttribute("categoriesList", categoriesList);
-			   	model.addAttribute("restaurantList", restaurantList);
+			  	model.addAttribute("restaurantList", restaurantList);
 			   	
 				return "index";
 		}

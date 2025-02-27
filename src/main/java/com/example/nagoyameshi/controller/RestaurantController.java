@@ -11,11 +11,13 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.nagoyameshi.entity.Categories;
 import com.example.nagoyameshi.entity.Restaurants;
+import com.example.nagoyameshi.form.ReservationInputForm;
 import com.example.nagoyameshi.repository.CategoriesRepository;
 import com.example.nagoyameshi.repository.RestaurantRepository;
 
@@ -34,6 +36,7 @@ public class RestaurantController {
     public String index(@RequestParam(name = "keyword", required = false) String keyword,   //キーワード検索
 		                @RequestParam(name = "price", required = false) Integer price,  //値段検索
 				     	@RequestParam(name = "categoriesId", required = false) Integer categories,  //カテゴリ検索
+				     	@RequestParam(name = "order", required = false) String order, //並び替え
 				    	@PageableDefault(page = 0, size = 10, sort = "id", direction = Direction.ASC) Pageable pageable,
 				    	Model model) 
 {  
@@ -43,13 +46,29 @@ public class RestaurantController {
 	 Page<Restaurants> restaurantList = restaurantRepository.findByCategoriesId(categories, pageable); //レストランの情報取得
 	 
 	if(keyword != null && !keyword.isEmpty()) {
-		restaurantPage = restaurantRepository.findByNameLike("%" + keyword + "%", pageable);  //キーワード検索
+		if (order !=null && order.equals("priceAsc")) {
+			restaurantPage = restaurantRepository.findByNameLikeOrderByCreatedAtDesc("%" + keyword + "%" + keyword + "%", pageable);
+		} else {
+			restaurantPage = restaurantRepository.findByNameLikeOrderByPriceAsc("%" + keyword + "%" + keyword + "%", pageable);
+		}
 	}	else if(price != null) {
-        restaurantPage = restaurantRepository.findByPriceLessThanEqual(price, pageable);  //値段検索
+		if(order !=null && order.equals("priceAsc")) {
+			restaurantPage = restaurantRepository.findByPriceLessThanEqualOrderByPriceAsc(price, pageable);  //値段検索	
+		} else {
+			restaurantPage = restaurantRepository.findByPriceLessThanEqualOrderByCreatedAtDesc(price, pageable);  //値段検索
+		}
 	}      else if(categories !=null) {
-		restaurantPage = restaurantRepository.findByCategoriesId(categories, pageable);  //カテゴリ検索
+	   	if(order !=null && order.equals("priceAsc")) {
+	   		restaurantPage = restaurantRepository.findByCategoriesIdOrderByCreatedAtAsc(categories, pageable);
+	   	} else {
+	   		restaurantPage = restaurantRepository.findByCategoriesIdOrderByCreatedAtDesc(categories, pageable);  //カテゴリ検索
+	   	}
 	}   else {
-		restaurantPage = restaurantRepository.findAll(pageable);  //すべての結果表示
+	 	if(order !=null && order.equals("priceAsc")) {
+	 		restaurantPage = restaurantRepository.findAllByOrderByPriceAsc(pageable);  //すべての結果表示
+	 	} else {
+	 		restaurantPage = restaurantRepository.findAllByOrderByCreatedAtDesc(pageable); 
+	 	}
 	}
 	   
 	
@@ -57,11 +76,22 @@ public class RestaurantController {
 	model.addAttribute("keyword", keyword);
 	model.addAttribute("price",price);
 	model.addAttribute("categoriesId",categories);
+	model.addAttribute("order", order);
 	
    	model.addAttribute("categoriesList", categoriesList);
-   	model.addAttribute("restaurantList", restaurantList);
+  	model.addAttribute("restaurantList", restaurantList);
 	
 	return "restaurants/index";
 		}
+   
+   @GetMapping("/{id}")  //店舗の詳細ページ
+   public String show(@PathVariable(name = "id") Integer id, Model model) {
+	   Restaurants restaurants = restaurantRepository.getReferenceById(id);
+	   
+	   model.addAttribute("restaurants", restaurants);
+	   model.addAttribute("reservationInputForm", new ReservationInputForm()); //予約入力確認画面を渡す
+	   
+	   return "restaurants/show";
+   }
 
 }     

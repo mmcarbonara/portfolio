@@ -48,12 +48,11 @@
 							   <th:block th:each="category : ${categoriesList}">
 								   <div class="nagoyamshi-category-item">
 									<h2 th:text="${category.name}" class="nagoyameshi-categoryName">カテゴリ名</h2>
-   		<!--カテゴリ用の画像表示--> 	<a th:href="@{admin/restaurants}"><img th:src="@{/images/category/__${category.getId()}__.jpeg}" class="nagoyameshi-categoryImg" alt="${category.name}"></a>
-   								   </div>
+		                        	  <a th:href="@{/restaurants?categoriesId=__${category.getId()}__}"><img th:src="@{/images/category/__${category.getId()}__.jpeg}" class="nagoyameshi-categoryImg" alt="${category.name}"></a>
+		  						   </div>
 								</th:block>
 							</div>
-						</div>
-						
+						</div>	
 					</div>
 				</main>
 				

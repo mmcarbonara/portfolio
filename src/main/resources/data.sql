@@ -80,3 +80,17 @@ INSERT IGNORE INTO users (id, name, furigana, postal_code, address, phone_number
 
 --campanyテーブル
 INSERT IGNORE INTO company (id, name, address, representative, capital, establishment, business, number_of_employees) VALUES (1, 'NAGOYAMESHI株式会社', '〒101-0022 東京都千代田区神田町12345ビル', '山田春', '1億円','2020年8月31日','飲食店の情報提供サービス', 100);
+
+
+--reservationsテーブル
+INSERT IGNORE INTO reservations (id, restaurant_id, user_id, reserved_date, reserved_time, number_of_people) VALUES (1, 1, 1, '2023-04-01','15:00:00',2);
+INSERT IGNORE INTO reservations (id, restaurant_id, user_id, reserved_date, reserved_time, number_of_people) VALUES (2, 2, 1, '2023-04-01','12:00:00', 3);
+INSERT IGNORE INTO reservations (id, restaurant_id, user_id, reserved_date, reserved_time, number_of_people) VALUES (3, 3, 1, '2023-04-01','13:00:00', 5);
+INSERT IGNORE INTO reservations (id, restaurant_id, user_id, reserved_date, reserved_time, number_of_people) VALUES (4, 4, 1, '2023-04-01','14:00:00', 5);
+INSERT IGNORE INTO reservations (id, restaurant_id, user_id, reserved_date, reserved_time, number_of_people) VALUES (5, 5, 1, '2023-04-01','16:00:00', 4);
+INSERT IGNORE INTO reservations (id, restaurant_id, user_id, reserved_date, reserved_time, number_of_people) VALUES (6, 6, 1, '2023-04-01','18:00:00', 3);
+INSERT IGNORE INTO reservations (id, restaurant_id, user_id, reserved_date, reserved_time, number_of_people) VALUES (7, 7, 1, '2023-04-01','19:00:00',4);
+INSERT IGNORE INTO reservations (id, restaurant_id, user_id, reserved_date, reserved_time, number_of_people) VALUES (8, 8, 1, '2023-04-01','16:00:00',5);
+INSERT IGNORE INTO reservations (id, restaurant_id, user_id, reserved_date, reserved_time, number_of_people) VALUES (9, 9, 1, '2023-04-01','13:00:00',2);
+INSERT IGNORE INTO reservations (id, restaurant_id, user_id, reserved_date, reserved_time, number_of_people) VALUES (10, 10, 1, '2023-04-01','19:00:00',3);
+INSERT IGNORE INTO reservations (id, restaurant_id, user_id, reserved_date, reserved_time, number_of_people) VALUES (11, 11, 1, '2023-04-01','20:00:00',3);
