@@ -20,7 +20,7 @@ public class ReservationInputForm {
 	@Min(value = 1, message = "来店人数は１名以上に設定してください")
 	private Integer numberOfPeople; 
 	
-	//来店日を取得する　？？？
+	//来店日を取得する　
 	public class Reservation {
 	    private LocalDate reservedDate;  // 予約日を保持するフィールド
 	    private LocalTime reservedTime;  // 予約時間を保持するフィールド
