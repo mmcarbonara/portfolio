@@ -57,13 +57,13 @@
                     </div>
 
                     <div class="col">
-                      <span class="nagoyameshi-pre-wrap" th:text="${restaurants.getDescription}">
+                      <span class="nagoyameshi-pre-wrap" th:text="${restaurants.getDescription}"></span>
                     </div>
                   </div>
               
                   <div class="row pb-2 mb-2 border-bottom">
                     <div class="col-4">
-                      <span class="fw-bold">料金</span>
+                      <span class="fw-bold">最低価格</span>
                     </div>
 
                     <div class="col">
@@ -74,7 +74,7 @@
                   <div class="row pb-2 mb-2 border-bottom">
                     <div class="col-4">
                       <span class="fw-bold">席数</span>
-                    </div>
+                    </div>                  
 
                     <div class="col">
                       <span th:text="${restaurants.getCapacity() + '人'}"></span>
@@ -83,8 +83,28 @@
 
                   <div class="row pb-2 mb-2 border-bottom">
                     <div class="col-4">
-                      <span class="fw-bold">電話番号</span>
+                      <span class="fw-bold">営業時間</span>
                     </div>
+                    
+                    <div class="col">
+                      <span th:text="${restaurants.getOpeningTime() + 'から' + restaurants.getClosingTime() + 'まで'}"></span>
+                    </div>
+                  </div>
+                  
+                  <div class="row pb-2 mb-2 border-bottom">
+                    <div class="col-4">
+                      <span class="fw-bold">定休日</span>
+                    </div>
+                    
+                    <div class="col">
+                      <span th:text="${restaurants.getHoliday()}"></span>
+                    </div>
+                  </div>
+
+                  <div class="row pb-2 mb-2 border-bottom">
+                    <div class="col-4">
+                      <span class="fw-bold">電話番号</span>
+                    </div>                    
 
                     <div class="col">
                       <span th:text="${restaurants.getPhoneNumber()}"></span>
@@ -125,12 +145,21 @@
 					<div class="card">
 						<div class="card-body">
 							<form method="get" th:action="@{/restaurants/__${restaurants.getId()}__/reservations/input}" th:object="${reservationInputForm}">
+								<!--来店日-->
 								<div class="form-group mb-2">
 									<label for="reservedDate" class="col-form-label text-md-left fw-bold">来店日</label>
 									<div th:if="${#fields.hasErrors('reservedDate')}" class="text-danger small mb-2" th:errors="*{reservedDate}"></div>
 									<input type="text" class="form-control" th:field="*{reservedDate}">
 								</div>
 								
+								<!--来店時間-->	
+								<div class="form-group mb-2">
+									<label for="reservedTime" class="col-form-label text-md-left fw-bold">来店時間</label>
+									<div th:if="${#fields.hasErrors('reservedTime')}" class="text-danger small mb-2" th:errors="*{reservedTime}"></div>
+									<input type="text" class="form-control" th:field="*{reservedTime}">
+								</div>
+								
+								<!--来店人数-->
 								<div class="form-group mb-4">
 									<label for="numberOfPeople" class="col-form-label text-md-left fw-bold">来店人数</label>
 									<div th:if="${#fields.hasErrors('numberOfPeople')}" class="text-danger small mb-2" th:errors="*{numberOfPeople}"></div>
