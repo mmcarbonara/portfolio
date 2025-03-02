@@ -81,3 +81,14 @@ CREATE TABLE IF NOT EXISTS reservations (
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
+CREATE TABLE IF NOT EXISTS review (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    restaurant_id INT NOT NULL,
+    user_id INT NOT NULL,   
+    score INT NOT NULL,
+    content VARCHAR(255) NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (restaurant_id) REFERENCES restaurants(id),
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);

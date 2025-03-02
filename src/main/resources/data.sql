@@ -81,7 +81,6 @@ INSERT IGNORE INTO users (id, name, furigana, postal_code, address, phone_number
 --campanyテーブル
 INSERT IGNORE INTO company (id, name, address, representative, capital, establishment, business, number_of_employees) VALUES (1, 'NAGOYAMESHI株式会社', '〒101-0022 東京都千代田区神田町12345ビル', '山田春', '1億円','2020年8月31日','飲食店の情報提供サービス', 100);
 
-
 --reservationsテーブル
 INSERT IGNORE INTO reservations (id, restaurant_id, user_id, reserved_date, reserved_time, number_of_people) VALUES (1, 1, 1, '2023-04-01','15:00:00',2);
 INSERT IGNORE INTO reservations (id, restaurant_id, user_id, reserved_date, reserved_time, number_of_people) VALUES (2, 2, 1, '2023-04-01','12:00:00', 3);
@@ -94,3 +93,15 @@ INSERT IGNORE INTO reservations (id, restaurant_id, user_id, reserved_date, rese
 INSERT IGNORE INTO reservations (id, restaurant_id, user_id, reserved_date, reserved_time, number_of_people) VALUES (9, 9, 1, '2023-04-01','13:00:00',2);
 INSERT IGNORE INTO reservations (id, restaurant_id, user_id, reserved_date, reserved_time, number_of_people) VALUES (10, 10, 1, '2023-04-01','19:00:00',3);
 INSERT IGNORE INTO reservations (id, restaurant_id, user_id, reserved_date, reserved_time, number_of_people) VALUES (11, 11, 1, '2023-04-01','20:00:00',3);
+
+--reviewテーブル
+INSERT IGNORE INTO review(id, restaurant_id, user_id, score, content) VALUES (1, 1, 1, 4, 'とてもおいしかったです');
+INSERT IGNORE INTO review(id, restaurant_id, user_id, score, content) VALUES (2, 1, 2, 5, 'また来たいです');
+INSERT IGNORE INTO review(id, restaurant_id, user_id, score, content) VALUES (3, 1, 3, 3, '美味しかったです');
+INSERT IGNORE INTO review(id, restaurant_id, user_id, score, content) VALUES (4, 1, 4, 3, '雰囲気がよかったです');
+INSERT IGNORE INTO review(id, restaurant_id, user_id, score, content) VALUES (5, 1, 5, 4, '今度は友人ときます');
+INSERT IGNORE INTO review(id, restaurant_id, user_id, score, content) VALUES (6, 1, 6, 5, '違うメニューも食べてみたいです');
+INSERT IGNORE INTO review(id, restaurant_id, user_id, score, content) VALUES (7, 1, 7, 3, 'スタッフの方が親切でした');
+INSERT IGNORE INTO review(id, restaurant_id, user_id, score, content) VALUES (8, 1, 8, 5, 'ありがとうございました');
+INSERT IGNORE INTO review(id, restaurant_id, user_id, score, content) VALUES (9, 1, 9, 4, 'リピートします');
+INSERT IGNORE INTO review(id, restaurant_id, user_id, score, content) VALUES (10, 1, 10, 4, '美味しかったです、またきます');

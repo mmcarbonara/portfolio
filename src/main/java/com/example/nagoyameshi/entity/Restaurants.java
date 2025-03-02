@@ -17,6 +17,7 @@ import lombok.Data;
 @Table(name = "restaurants")
 @Data
 public class Restaurants {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")

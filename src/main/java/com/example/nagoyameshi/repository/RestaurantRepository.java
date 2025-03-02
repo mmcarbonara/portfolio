@@ -27,5 +27,6 @@ public interface RestaurantRepository extends JpaRepository<Restaurants, Integer
 	
     
 	List<Restaurants> findAllByOrderByCategories_IdAscCreatedAtDesc();
+	
 }
 

@@ -3,7 +3,6 @@ maxDate = maxDate.setMonth(maxDate.getMonth() + 3);
 
 //予約日程の設定
 flatpickr('#reservedDate', {
-	mode: "range",
     locale: 'ja',
     minDate: 'today',　//今日の日付のみ選択可能
     maxdate: maxDate

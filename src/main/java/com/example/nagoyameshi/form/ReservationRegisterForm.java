@@ -16,5 +16,5 @@ public class ReservationRegisterForm {
     
     private Integer numberOfPeople;
     
-    private Integer price;
-}
+	}
+
