@@ -8,10 +8,12 @@ import com.example.nagoyameshi.entity.Restaurants;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
 
-@Data
+
 public class ReservationInputForm {
+	private String openingTime;
+	private String closingTime;
+	
 	@NotBlank(message = "日程を入力してください")
 	private String reservedDate;
 	
@@ -21,6 +23,7 @@ public class ReservationInputForm {
 	@NotNull(message = "来店人数を入力してください")
 	@Min(value = 1, message = "来店人数は１名以上に設定してください")
 	private Integer numberOfPeople; 
+	
 	
 	//来店日時を取得する　
 	public class Reservation {
@@ -38,5 +41,23 @@ public class ReservationInputForm {
 	    public Restaurants getRestaurantsHoliday() {
 	    	return getRestaurantsHoliday();
 	    }
+
+
+
+	}
+
+	public Integer getNumberOfPeople() {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
+	}
+
+	public String getReservedDate() {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
+	}
+
+	public String getReservedTime() {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
 	}
 }

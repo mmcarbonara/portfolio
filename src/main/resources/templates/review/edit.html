@@ -1,0 +1,71 @@
+<!DOCTYPE html><!--店舗詳細画面からレビューの編集ができるフォーム-->
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"> 
+  <head>
+    <div th:replace="~{fragment :: meta}"></div>
+
+    <div th:replace="~{fragment :: styles}"></div>
+    
+    <!--Flatpicker-->
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    <title>レビュー編集</title>
+  </head>
+  <body>
+    <div class="nagoymeshi-wrapper">
+    <!--ヘッダー-->
+    <div th:replace="~{fragment :: header}"></div>
+
+    <main>
+      <div class="container pt-4 pb-5 nagoyemeshi-container">
+        <div class="row justify-content-center">
+          <div class="col-xxl-9 col-xl-10 col-lg-11">
+            <nav class="mb-4" style="--bs-breadcrumb-divider:'>';">
+              <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>
+                <li class="breadcrumb-item"><a th:href="@{/restaurants}">店舗一覧</a></li>
+                <li class="breadcrumb-item"><a th:href="@{/restaurants?restaurantsId=__${restaurants.getId()}__}">店舗詳細</a></li>
+                <li class="breadcrumb-item active" aria-current="page">レビュー編集</li>
+              </ol>
+            </nav>
+
+            <h1 class="mb-4 text-center" th:text="${restaurants.getName()} + 'のレビュー編集'"></h1>
+            <!--フォームあとで確認-->
+ 			<form method="post" th:action="@{/restaurants/review/create}"　th:object="${reviewInputForm}" entype="multipart/form/data">
+				<input type="hidden" th:field="*{restaurantId}" th:value="${reviewInputForm.getRestaurantId()}"><!--restaurantIdを登録処理に渡す-->
+				<div class="form-group row mb-3">
+					<div class="col-md-4">
+						<label for="score" class="col-form-label text-md-left fw-bold">評価</label>
+					</div>
+					<div class="col-md-8">
+						<div th:if="${field != null}" class="text-danger small mb-2" th:errors="*{score}"></div>
+						<input type="number" class="form-control" th:field="*{score}">
+					</div>
+				</div>	 
+				
+				<div class="col-md-4">
+						<label for="content" class="col-form-label text-md-left fw-bold">コメント</label>
+					</div>
+					<div class="col-md-8">
+						<iv th:if="${fields != null}" class="text-danger small mb-2" th:errors="*{content}"></div>
+						<input type="number" class="form-control" th:field="*{content}">
+					</div>
+				</div>	 
+				
+				 <!--レビューの投稿ボタン-->
+			     <div class="form-group d-flex justify-content-center my-4">
+			　     　<button type="submit" class="btn text-white shadow-sm w-50 nagoyameshi-btn">更新</button>
+			    </div>            
+			</form>
+            
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!--フッター-->
+    <div th:replace="~{fragment :: footer}"></div>
+    </div>
+
+    <div th:replace="~{fragment :: scripts}"></div>
+  </body>
+</html>

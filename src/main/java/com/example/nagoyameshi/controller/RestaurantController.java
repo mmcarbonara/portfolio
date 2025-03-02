@@ -19,6 +19,7 @@ import com.example.nagoyameshi.entity.Categories;
 import com.example.nagoyameshi.entity.Restaurants;
 import com.example.nagoyameshi.entity.Review;
 import com.example.nagoyameshi.form.ReservationInputForm;
+import com.example.nagoyameshi.form.ReviewEditForm;
 import com.example.nagoyameshi.form.ReviewInputForm;
 import com.example.nagoyameshi.repository.CategoriesRepository;
 import com.example.nagoyameshi.repository.RestaurantRepository;
@@ -109,7 +110,8 @@ public class RestaurantController {
         model.addAttribute("restaurants", restaurants);
         model.addAttribute("reviews", reviews);
         
-        return "review/index";
+        return "restaurants/show";
+        //return "review/index";
    }
    
    @GetMapping("/{id}/review/input")  //レビューの投稿画面の表示
@@ -122,5 +124,17 @@ public class RestaurantController {
 	   model.addAttribute("reviewInputForm",reviewInputForm); //フォームを渡す
 
        return "review/input";  // 店舗詳細ページのテンプレートを返す
+   }
+   
+   @GetMapping("/{id}/review/edit")  //レビューの編集ページの表示
+   public String reviewEdit(@PathVariable(name = "id") Integer id, Model model) {
+	   Restaurants restaurants = restaurantRepository.getReferenceById(id);
+	   ReviewEditForm reviewEditForm = new ReviewEditForm(); //レストランのidを入れる
+	   reviewEditForm.setRestaurantId(id);
+	   
+	   model.addAttribute("restaurants", restaurants);
+	   model.addAttribute("reviewEditForm",reviewEditForm); //フォームを渡す
+
+       return "review/edit";  // 店舗詳細ページのテンプレートを返す
    }
 }     

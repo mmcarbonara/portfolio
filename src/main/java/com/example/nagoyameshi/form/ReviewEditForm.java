@@ -10,6 +10,8 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class ReviewEditForm {
+	private Integer restaurantId;
+
 	@NotNull(message = "評価してください")
 	@Min(value = 1, message = "評価は１以上に設定してください")
 	@Max(value = 5, message = "評価は５以内に設定してください")

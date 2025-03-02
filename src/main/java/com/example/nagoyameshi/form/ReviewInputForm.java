@@ -17,5 +17,6 @@ public class ReviewInputForm {
 	
 	@NotBlank(message = "コメントを入力してください")
 	private String content;
+	
 }
 

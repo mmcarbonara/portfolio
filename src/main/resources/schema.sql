@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS reservations (
     user_id INT NOT NULL,
     reserved_date DATE NOT NULL,
     reserved_time TIME NOT NULL,
-    number_of_people INT NOT NULL,
+    number_of_people INT,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (restaurant_id) REFERENCES restaurants(id),

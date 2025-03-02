@@ -1,7 +1,5 @@
 package com.example.nagoyameshi.controller;  //予約一覧ページを管理するコントローラー
 
-import java.time.LocalTime;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -60,46 +58,39 @@ public class ReservationController {
 	  Restaurants restaurants = restaurantRepository.getReferenceById(id);
 	  Integer numberOfPeople = reservationInputForm.getNumberOfPeople();
 	  Integer capacity = restaurants.getCapacity();
-	  String reservedTime = reservationRepository.getReservedTime();
 	  
-	  if(numberOfPeople !=null) {
+	  
+	  
+	  //定員がオーバーしてないか確認して、オーバーしてたらエラーメッセージ表示させる
+	  if(numberOfPeople !=null) {    
 		  if(!reservationService.isWithcapacity(numberOfPeople, capacity)) {
-			  FieldError fieldError = new FieldError(bindingResult.getObjectName(), "numberOfPeople","予約人数が定員を超えています");
-			  bindingResult.addError(fieldError);
+			  FieldError fieldError = new FieldError(bindingResult.getObjectName(), "numberOfPeople","予約人数が定員を超えています"); //エラーを取得してfieldErrorに渡す
+			  bindingResult.addError(fieldError); //エラーの結果を追加する
 		  }
-	  } //SimpleDateFormat sdFormatDateTime = new SimpleDateFormat("HH:mm");
-
-//10:40
-//SimpleDateFormat sdFormatDateTime = new SimpleDateFormat("HH:mm:ss");
-//sdFormatDateTime.parse(比較する時間の変数).compareTo(sdFormatDateTime.parse(比較する時間の変数))
-
-		    LocalTime reservedTimeLocal = LocalTime.parse(reservedTime);
-		    LocalTime openingTimeLocal = LocalTime.parse(restaurants.getOpeningTime());
-		    LocalTime closingTimeLocal = LocalTime.parse(restaurants.getClosingTime());
-	 if (reservedTime.isBefore(restaurants.getOpeningTime()) || reservedTime.isAfter(restaurants.getClosingTime())) {
-		    // 時間外の場合、エラーメッセージをバインディング結果に追加
-		    FieldError fieldError = new FieldError(
-		        bindingResult.getObjectName(),  // オブジェクト名（フォームオブジェクトの名前）
-		        "reservedTime",  // フィールド名
-		        "営業時間外です"  // エラーメッセージ
-		    );
-		    bindingResult.addError(fieldError);  // バインディング結果にエラーを追加
-		}
+	  } 
 	  
-	  
-	  
-	  
+	  //営業時間以外の時間に予約したらエラーメッセージを表示させる
+	//  String reservedTime = reservationInputForm.getReservedTime();
+	//  if(!reservationService.isWithinBusinessHours(reservedTime, restaurants.getOpeningTime(), restaurants.getClosingTime())) {
+	//	  bindingResult.addError(new FieldError("reservationInputForm", "reservedTime", "予約時間は営業時間内に設定してください"));
+	//  }
+  
+	  //エラー時には再度ページを表示させる
 	  if(bindingResult.hasErrors()) {
 		  model.addAttribute("restaurants", restaurants);
-		  model.addAttribute("reservationInputForm", reservationInputForm);  //追加
+		  model.addAttribute("reservationInputForm", reservationInputForm);  
 		  model.addAttribute("errorMessage", "予約内容に不備があります");
 		  return "restaurants/show";
 	  }
 	  
+	  //エラーがなければ確認ページへ
 	  redirectAttributes.addFlashAttribute("reservationInputForm", reservationInputForm);
 	  
 	  return "redirect:/restaurants/{id}/reservations/confirm";
-  }
+}
+
+  
+  
   
   @GetMapping("/restaurants/{id}/reservations/confirm")  //予約確認ページを表示させる
   public String confirm(@PathVariable(name = "id") Integer id,
@@ -112,14 +103,21 @@ public class ReservationController {
 	  
 	  //来店日と来店時間取得する
 	  String reservedDate = reservationInputForm.getReservedDate();
-	  //来店時間
+      //来店時間
 	  String reservedTime = reservationInputForm.getReservedTime();
+      //人数
+	  Integer numberOfPeople = reservationInputForm.getNumberOfPeople(); 
+	  
+	  //料金の計算
+	  Integer price = restaurants.getPrice();
+	  Integer amount = reservationService.calculateAmount(numberOfPeople,price);
 	  
 	  ReservationRegisterForm reservationRegisterForm = new ReservationRegisterForm(restaurants.getId(),
 			  																		user.getId(),
 			  																		reservedDate.toString(),
 			                                                                        reservedTime.toString(),
-			                                                                        reservationInputForm.getNumberOfPeople()
+			                                                                        reservationInputForm.getNumberOfPeople(),
+			                                                                        amount
 			                                                                        );
 	 
 	  model.addAttribute("restaurants", restaurants);

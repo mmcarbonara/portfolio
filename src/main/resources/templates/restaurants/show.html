@@ -11,7 +11,7 @@
     <title>店舗詳細</title>
   </head>
   <body>
-    <div class="nagoymeshi-wrapper">
+    <div class="nagoyameshi-wrapper">
     <!--ヘッダー-->
     <div th:replace="~{fragment :: header}"></div>
 
@@ -174,10 +174,10 @@
 					</div>
 				</div>
 				
-				                <!--レビュー-->
-				                 <h1 class="mb-4 text-center">レビュー</h1>
-				                
+				               
+				                <!--レビュー機能-->
 				                <!--ログインしていたら表示させるようにする-->
+				                <h1 class="mb-4 text-center">レビュー</h1>
 				                <div sec:authorize="isAuthenticated()" class="form-group text-center">
 									<form method="get" th:action="@{/restaurants/__${restaurants.getId()}__/review/input}">
 										<button type="submit" class="btn text-white shadow-sm nagoyameshi-btn">レビュー投稿する</button>
@@ -185,26 +185,31 @@
 								</div>
 								
 								<!--レビュー投稿の表示：訂正が必要店舗詳細ページに表示されない-->
-               				　　 <div th:each="review : ${reviews}">
-   				             		 <div>
-     						  			<strong th:text="${user.userId}"></strong>  
+						      <div class="row">
+               				　　  <div th:each="review : ${reviews}" class="col-md-6 mb-4">
+   				             		 <div class="card">
+									   <div class="card-body">
+     						  			<strong th:text="${review.user.userId}"></strong>  
      						  	　　	    <span th:text="${review.score}"></span> 
-      						 		 	<span th:text="${#dates.format(review.createdDay, 'yyyy-MM-dd HH:mm')}">投稿日時</span> 
+      						 		 	<span th:text="${#dates.format('yyyy-MM-dd HH:mm')}">投稿日時</span> 
      							   		  <p th:text="${review.content}">レビュー内容</p> 
+     							   	   </div>
    			    					 </div>
-				          	   </div>
+				          	     </div>
 				          	   
 				          	  <!--もしレビューが６件以上であれば-->
-				          	  <!-- 店舗詳細ページでレビューがあるかどうかを確認,レビューがあれば「レビューを見る」リンクを表示 -->
+				          	  <!-- 店舗詳細ページでレビューがあるかどうかを確認,レビューがあれば「レビューを見る」リンクを表示--> 
                              <div th:if="${reviews != null and reviews.size() > 0}">
-								<a th:href="@{/restaurants/{restaurantId}(restaurantId=${restaurant.id})}">レビューを見る</a>
-							</div>
+ 　　　　　　　　　　　　　　　　 　　　<div th:if="${#lists.size(reviews) > 6}" class="col-12 text-center">
+   								 　　<a th:href="@{/restaurants/{restaurantId}/reviews}(restaurantId=${restaurant.id})">すべてのレビューを見る</a>
+  							　　　</div>
+						　　　</div>
 
                             <!-- レビューがなければ「まだレビューはありません」と表示 -->
-                            <div th:unless="${reviews != null and reviews.size() > 0}">
+                            <div th:unless="${reviews != null and reviews.size() > 0}" class="text-center">
                                 <p class="text-center">まだレビューはありません。</p>
                             </div>
-                
+                              
               </div>
             </div>
           </div>
