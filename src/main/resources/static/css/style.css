@@ -153,6 +153,11 @@ footer {
 	width: 150px;
 }
 
+.star-rating {
+	font-size: 1.5rem;
+	color: #ffd700;
+}
+
 @media screen and (min-width: 1400px) {
 	.nagoyameshi-container {
 		max-width: 1200px;

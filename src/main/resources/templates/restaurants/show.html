@@ -176,40 +176,63 @@
 				
 				               
 				                <!--レビュー機能-->
-				                <!--ログインしていたら表示させるようにする-->
-				                <h1 class="mb-4 text-center">レビュー</h1>
+				                <!--ログインしていたら表示させるようにするOK-->
+				                <h2 class="mb-4 text-center">レビュー</h2>
 				                <div sec:authorize="isAuthenticated()" class="form-group text-center">
 									<form method="get" th:action="@{/restaurants/__${restaurants.getId()}__/review/input}">
 										<button type="submit" class="btn text-white shadow-sm nagoyameshi-btn">レビュー投稿する</button>
 									</form>
 								</div>
-								
-								<!--レビュー投稿の表示：訂正が必要店舗詳細ページに表示されない-->
-						      <div class="row">
-               				　　  <div th:each="review : ${reviews}" class="col-md-6 mb-4">
-   				             		 <div class="card">
-									   <div class="card-body">
-     						  			<strong th:text="${review.user.userId}"></strong>  
-     						  	　　	    <span th:text="${review.score}"></span> 
-      						 		 	<span th:text="${#dates.format('yyyy-MM-dd HH:mm')}">投稿日時</span> 
-     							   		  <p th:text="${review.content}">レビュー内容</p> 
-     							   	   </div>
-   			    					 </div>
-				          	     </div>
-				          	   
-				          	  <!--もしレビューが６件以上であれば-->
-				          	  <!-- 店舗詳細ページでレビューがあるかどうかを確認,レビューがあれば「レビューを見る」リンクを表示--> 
-                             <div th:if="${reviews != null and reviews.size() > 0}">
- 　　　　　　　　　　　　　　　　 　　　<div th:if="${#lists.size(reviews) > 6}" class="col-12 text-center">
-   								 　　<a th:href="@{/restaurants/{restaurantId}/reviews}(restaurantId=${restaurant.id})">すべてのレビューを見る</a>
-  							　　　</div>
-						　　　</div>
-
-                            <!-- レビューがなければ「まだレビューはありません」と表示 -->
-                            <div th:unless="${reviews != null and reviews.size() > 0}" class="text-center">
-                                <p class="text-center">まだレビューはありません。</p>
-                            </div>
-                              
+								 
+								 <div th:unless="${#lists.isEmpty(reviews)}" class="row row-cols1 row-cols-md-2 g-4 mb-4">
+									 <div th:each="review : ${reviews}">
+										 <div class="col">
+											 <div class="card">
+												 <div class="card-body">
+													 <div class="d-flex justify-content-between">
+														<!--名前の表示OK-->
+														<h3 class="font-weight-bold" th:text="${review.getUser().getName()}"></h3>
+														 <!--<span sec:authorize="isAuthentucated()" th:if="${#authentication.principal.user.id == review.getUser().getId()}">-->
+															<!--要訂正：編集のボタンの位置-->
+														 	<a th:href="@{restaurants/__${restaurants.getId()}__/review/__${review.getId()}__/edit}" class="me-2">編集</a>
+														 	
+														 	<a href="#" class="nagoyameshi-link-danger" data-bs-toggle="modal" 
+														 	   th:data-bs-target="${'deleteReviewModal' + review.getId()}">削除</a> 
+														 	    
+														 	  </div>
+														 </span>
+													 </div>
+													 
+													<!--要訂正：星の数　名前以外のレビュー内容-->
+													<div class="review-item"> 
+														 <div class="star-rating">
+														  	<span th:each="i: ${#numbers.sequence(1, review.score)}"}>&#9733;</span>
+														    <span th:each="i: ${#numbers.sequence(review.score + 1, 5)}"}>&#9734;</span>
+													 	</div>
+													 	<p th:text="${#dates.format(review.getCreatedAt(), 'yyyy年MM月dd日')}"></p>
+													 	<p th:text="${review.getContent}"></p>
+													 </div>
+													 
+												 </div>
+											 </div>
+										 </div>
+									 </div>
+								 </div>
+								 
+								 <!--レビューがあれば全て見れるようにしてなければないと表示するOK-->
+								 <div th:unless="${not #lists.isEmpty(reviews)}">
+									 <div class="row d-flex justify-content-center">
+										 <p class="text-center">レビューがありません</p>
+									　</div>
+								</div>
+								 <div th:if="${not #lists.isEmpty(reviews)}">
+								      <div class="row d-flex justify-content-center">	
+									     <a th:href="@{/review}" class="btn text-white shadow-sm w-50 nagoyameshi-btn">全てのレビューを見る</a> 
+									  </div>
+								 </div>
+								  
+					 </div>
+				          	     				          	                             
               </div>
             </div>
           </div>

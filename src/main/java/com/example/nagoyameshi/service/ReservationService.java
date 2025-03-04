@@ -1,8 +1,5 @@
 package com.example.nagoyameshi.service;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,11 +28,10 @@ public class ReservationService {
 		Reservation reservation = new Reservation();
 		Restaurants restaurantId = restaurantRepository.getReferenceById(reservationRegisterForm.getRestaurantId());
 		User user = userRepository.getReferenceById(reservationRegisterForm.getUserId());
-		LocalDate reservedDate = LocalDate.parse(reservationRegisterForm.getReservedDate());
+		
 		
 		reservation.setRestaurantId(restaurantId);
 		reservation.setUser(user);
-		reservation.setReservedDate(reservedDate);
 		reservation.setNumberOfPeople(reservationRegisterForm.getNumberOfPeople());
 		
 		reservationRepository.save(reservation);
@@ -45,35 +41,36 @@ public class ReservationService {
 	public boolean isWithcapacity(Integer numberOfPeople, Integer capacity) {
 		return numberOfPeople <= capacity;
 	}
-	
-    
-	// 予約時間が営業時間内であるかどうかを確認する
-	//SimpleDateFormat sdFormatDateTime = new SimpleDateFormat("HH:mm:ss"); //StringからTimeに変換して比較する
-	//public boolean isWithinBusinessHours(String reservedTime, String openingTime, String closingTime) {
-	//	return !reservedTime.isBefore(openingTime) && !reservedTime.isAfter(closingTime);
-//	}
-
-	public boolean isWithinBusinessHours(LocalTime reservedTime, String openingTime, String closingTime) {
-		// TODO 自動生成されたメソッド・スタブ
-		return false;
-	}
-	
 	//金額を計算する
 	public Integer calculateAmount(Integer numberOfPeople, Integer price) {
 		int amount = price * (int)numberOfPeople;
 		return amount;
 	}
 }
-	//下記のは削除検討
-	//public boolean isWithreservedTime(Integer reservedTime, Integer openingTime, Integer closingTime) {
-	    // 予約時間が営業時間内であることを確認できた時のみ予約ができるようにする
-	 //   return reservedTime >= openingTime && reservedTime <= closingTime;
-//	}
-	
-    // 予約日が定休日（リスト内の日付）でないか確認する
-	//public boolean isNotHoliday(LocalDate reservedDate, String holiday) {
-	//    DayOfWeek dayOfWeek = reservedDate.getDayOfWeek();
-	 //   return !dayOfWeek.toString().equalsIgnoreCase(holiday);
+    
+	// 予約時間が営業時間内であるかどうかを確認する
+    // SimpleDateFormat sdFormatDateTime = new SimpleDateFormat("HH:mm"); //StringからTimeに変換して比較する
+	// public boolean isWithinBusinessHours(String reservedTime, String openingTime, String closingTime) {
+  //  	return !reservedTime.isBefore(openingTime) && !reservedTime.isAfter(closingTime);
+	//}
+	 
+	 // 営業時間内かどうかを確認するメソッド
+	  //  public boolean isWithinBusinessHours(String reservedTime, String openingTime, String closingTime) {
+	        // "HH:mm" の形式で文字列を LocalTime に変換
+	   //     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+
+	        // 文字列を LocalTime に変換
+	    //    LocalTime reserved = LocalTime.parse(reservedTime, formatter);
+	    //    LocalTime opening = LocalTime.parse(openingTime, formatter);
+	     //   LocalTime closing = LocalTime.parse(closingTime, formatter);
+
+	        // 予約時間が営業時間内かどうかを比較
+	     //   return !reserved.isBefore(opening) && !reserved.isAfter(closing);
+	 //   }
+
+
+
+
 	
 	
 

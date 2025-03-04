@@ -12,8 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.nagoyameshi.entity.Categories;
 import com.example.nagoyameshi.entity.Restaurants;
@@ -136,5 +138,14 @@ public class RestaurantController {
 	   model.addAttribute("reviewEditForm",reviewEditForm); //フォームを渡す
 
        return "review/edit";  // 店舗詳細ページのテンプレートを返す
+   }
+   
+   @PostMapping("/{id}/delete") //店舗詳細ページからレビューの削除モーダル
+   public String delete(@PathVariable(name = "id") Integer id,RedirectAttributes redirectAttributes) {
+	   reviewRepository.deleteById(id);
+	   
+	   redirectAttributes.addFlashAttribute("successMessage", "レビューを削除しました");
+	   
+	   return "restaurants/show";
    }
 }     

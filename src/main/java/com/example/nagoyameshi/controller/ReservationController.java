@@ -69,12 +69,6 @@ public class ReservationController {
 		  }
 	  } 
 	  
-	  //営業時間以外の時間に予約したらエラーメッセージを表示させる
-	//  String reservedTime = reservationInputForm.getReservedTime();
-	//  if(!reservationService.isWithinBusinessHours(reservedTime, restaurants.getOpeningTime(), restaurants.getClosingTime())) {
-	//	  bindingResult.addError(new FieldError("reservationInputForm", "reservedTime", "予約時間は営業時間内に設定してください"));
-	//  }
-  
 	  //エラー時には再度ページを表示させる
 	  if(bindingResult.hasErrors()) {
 		  model.addAttribute("restaurants", restaurants);
@@ -88,7 +82,12 @@ public class ReservationController {
 	  
 	  return "redirect:/restaurants/{id}/reservations/confirm";
 }
-
+  //営業時間以外の時間に予約したらエラーメッセージを表示させる
+  //  LocalDate reservedTime = reservationInputForm.getReservedTime();
+  //  if(!reservationService.isWithinBusinessHours(reservedTime, restaurants.getOpeningTime(), restaurants.getClosingTime())) {
+  //	  bindingResult.addError(new FieldError("reservationInputForm", "reservedTime", "予約時間は営業時間内に設定してください"));
+  //  }
+ 
   
   
   
