@@ -12,17 +12,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.nagoyameshi.entity.Categories;
 import com.example.nagoyameshi.entity.Restaurants;
 import com.example.nagoyameshi.entity.Review;
 import com.example.nagoyameshi.form.ReservationInputForm;
-import com.example.nagoyameshi.form.ReviewEditForm;
-import com.example.nagoyameshi.form.ReviewInputForm;
 import com.example.nagoyameshi.repository.CategoriesRepository;
 import com.example.nagoyameshi.repository.RestaurantRepository;
 import com.example.nagoyameshi.repository.ReviewRepository;
@@ -95,7 +91,7 @@ public class RestaurantController {
    @GetMapping("/{id}")  //店舗の詳細ページ
    public String show(@PathVariable(name = "id") Integer id, Model model) {
 	   Restaurants restaurants = restaurantRepository.getReferenceById(id);
-	   List<Review> reviews = reviewRepository.findByRestaurantId(restaurants); //店舗のレビューを取得する
+	  List<Review> reviews = reviewRepository.findByRestaurantId(restaurants, null); //店舗のレビューを取得する   要検討
 	   
 	   model.addAttribute("restaurants", restaurants);
 	   model.addAttribute("reviews", reviews);
@@ -104,48 +100,4 @@ public class RestaurantController {
 	   return "restaurants/show";
    }
    
-   @GetMapping("/{id}/review")  //店舗詳細ページからレビュー投稿一覧を表示
-   public String review(@PathVariable(name = "id") Integer id, Model model) {
-        Restaurants restaurants = restaurantRepository.getReferenceById(id);
-        List<Review> reviews = reviewRepository.findByRestaurantId(restaurants); //店舗のレビューを取得する
-        		
-        model.addAttribute("restaurants", restaurants);
-        model.addAttribute("reviews", reviews);
-        
-        return "restaurants/show";
-        //return "review/index";
-   }
-   
-   @GetMapping("/{id}/review/input")  //レビューの投稿画面の表示
-   public String reviewInput(@PathVariable(name = "id") Integer id, Model model) {
-	   Restaurants restaurants = restaurantRepository.getReferenceById(id);
-	   ReviewInputForm reviewInputForm = new ReviewInputForm(); //レストランのidを入れる
-	   reviewInputForm.setRestaurantId(id);
-	   
-	   model.addAttribute("restaurants", restaurants);
-	   model.addAttribute("reviewInputForm",reviewInputForm); //フォームを渡す
-
-       return "review/input";  // 店舗詳細ページのテンプレートを返す
-   }
-   
-   @GetMapping("/{id}/review/edit")  //レビューの編集ページの表示
-   public String reviewEdit(@PathVariable(name = "id") Integer id, Model model) {
-	   Restaurants restaurants = restaurantRepository.getReferenceById(id);
-	   ReviewEditForm reviewEditForm = new ReviewEditForm(); //レストランのidを入れる
-	   reviewEditForm.setRestaurantId(id);
-	   
-	   model.addAttribute("restaurants", restaurants);
-	   model.addAttribute("reviewEditForm",reviewEditForm); //フォームを渡す
-
-       return "review/edit";  // 店舗詳細ページのテンプレートを返す
-   }
-   
-   @PostMapping("/{id}/delete") //店舗詳細ページからレビューの削除モーダル
-   public String delete(@PathVariable(name = "id") Integer id,RedirectAttributes redirectAttributes) {
-	   reviewRepository.deleteById(id);
-	   
-	   redirectAttributes.addFlashAttribute("successMessage", "レビューを削除しました");
-	   
-	   return "restaurants/show";
-   }
 }     

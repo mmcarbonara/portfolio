@@ -66,6 +66,11 @@ public class Restaurants {
 	
 	@Column(name = "updated_at", insertable = false, updatable = false)
     private Timestamp updatedAt;
+
+	public Restaurants getRestaurantId() {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
+	}
 	}
 
 

@@ -185,29 +185,33 @@
 								</div>
 								 
 								 <div th:unless="${#lists.isEmpty(reviews)}" class="row row-cols1 row-cols-md-2 g-4 mb-4">
-									 <div th:each="review : ${reviews}">
+									 <div th:each="review, interStat : ${reviews}" th:if="${interStat.index < 6}">  <!--ループ条件の追加6件以上は表示しないOK-->
 										 <div class="col">
 											 <div class="card">
 												 <div class="card-body">
 													 <div class="d-flex justify-content-between">
 														<!--名前の表示OK-->
 														<h3 class="font-weight-bold" th:text="${review.getUser().getName()}"></h3>
+															
+															
 														 <!--<span sec:authorize="isAuthentucated()" th:if="${#authentication.principal.user.id == review.getUser().getId()}">-->
-															<!--要訂正：編集のボタンの位置-->
+															 
+															<!--要訂正：編集のボタンの位置
 														 	<a th:href="@{restaurants/__${restaurants.getId()}__/review/__${review.getId()}__/edit}" class="me-2">編集</a>
 														 	
 														 	<a href="#" class="nagoyameshi-link-danger" data-bs-toggle="modal" 
-														 	   th:data-bs-target="${'deleteReviewModal' + review.getId()}">削除</a> 
+														 	   th:data-bs-target="${'deleteReviewModal' + review.getId()}">削除</a>--> 
+														 	   
+														 	
 														 	    
 														 	  </div>
 														 </span>
 													 </div>
 													 
-													<!--要訂正：星の数　名前以外のレビュー内容-->
+													<!--名前以外のレビュー内容OK-->
 													<div class="review-item"> 
 														 <div class="star-rating">
-														  	<span th:each="i: ${#numbers.sequence(1, review.score)}"}>&#9733;</span>
-														    <span th:each="i: ${#numbers.sequence(review.score + 1, 5)}"}>&#9734;</span>
+														    <span th:each="star : ${#numbers.sequence(1,5)}" th:text="${star <= review.getScore()} ? '&#9733;' : '&#9734;'"></span>
 													 	</div>
 													 	<p th:text="${#dates.format(review.getCreatedAt(), 'yyyy年MM月dd日')}"></p>
 													 	<p th:text="${review.getContent}"></p>
@@ -225,10 +229,8 @@
 										 <p class="text-center">レビューがありません</p>
 									　</div>
 								</div>
-								 <div th:if="${not #lists.isEmpty(reviews)}">
-								      <div class="row d-flex justify-content-center">	
-									     <a th:href="@{/review}" class="btn text-white shadow-sm w-50 nagoyameshi-btn">全てのレビューを見る</a> 
-									  </div>
+							    <div th:if="${not #lists.isEmpty(reviews)}">	    
+									       <a th:href="@{/review}" class="row d-flex justify-content-center ">全てのレビューを見る</a> 
 								 </div>
 								  
 					 </div>
