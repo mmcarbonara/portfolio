@@ -223,14 +223,16 @@
 									 </div>
 								 </div>
 								 
-								 <!--レビューがあれば全て見れるようにしてなければないと表示するOK-->
+								 <!--レビューがなければないと表示するOK-->
 								 <div th:unless="${not #lists.isEmpty(reviews)}">
 									 <div class="row d-flex justify-content-center">
 										 <p class="text-center">レビューがありません</p>
 									　</div>
 								</div>
+								
+								<!--レビューがあれば全て見れるようにしてなければないと表示するOK-->
 							    <div th:if="${not #lists.isEmpty(reviews)}">	    
-									<a th:href="@{/restaurants/__${restaurants.getId()}__/review}" class="row d-flex justify-content-center ">全てのレビューを見る</a> 
+									<a th:href="@{/review/restaurants/__${restaurants.getId()}__/review}" class="row d-flex justify-content-center ">全てのレビューを見る</a> 
 								 </div>
 								  
 					 </div>

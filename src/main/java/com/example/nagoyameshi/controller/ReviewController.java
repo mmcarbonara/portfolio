@@ -2,8 +2,6 @@ package com.example.nagoyameshi.controller; //レビュー機能コントロー�
 
 
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -22,17 +20,16 @@ import com.example.nagoyameshi.form.ReviewEditForm;
 import com.example.nagoyameshi.form.ReviewInputForm;
 import com.example.nagoyameshi.repository.RestaurantRepository;
 import com.example.nagoyameshi.repository.ReviewRepository;
-import com.example.nagoyameshi.service.ReviewService;
 
 @Controller
 @RequestMapping("/review")
 public class ReviewController {
-    private ReviewService reviewService;
+  //  private ReviewService reviewService;
     private ReviewRepository reviewRepository;
     private RestaurantRepository restaurantRepository;
     
-	public ReviewController(ReviewService reviewService,ReviewRepository reviewRepository,RestaurantRepository restaurantRepository) {
-		this.reviewService = reviewService;
+	public ReviewController(ReviewRepository reviewRepository,RestaurantRepository restaurantRepository) {
+	//	this.reviewService = reviewService;
 		this.reviewRepository =reviewRepository;
 		this.restaurantRepository = restaurantRepository;
 	}
@@ -50,13 +47,16 @@ public class ReviewController {
     	 return "review/index"; 
 }
     @GetMapping("/restaurants/{id}/review")  //店舗詳細ページからレビュー投稿一覧を表示
-    public String review(@PathVariable(name = "id") Integer id, Model model) {
+    public String review(@PathVariable(name = "id") Integer id, Pageable pageable,Model model) {
          Restaurants restaurants = restaurantRepository.getReferenceById(id);
-         Pageable pageable;
- 		List<Review> reviews = reviewRepository.findByRestaurantId(restaurants.getRestaurantId()); //店舗のレビューを取得する
+       	Page<Review> reviewPage;
+    	
+    	reviewPage = reviewRepository.findAll(pageable);
+ 	//	List<Review> reviews = reviewRepository.findByRestaurantId(restaurants.getRestaurantId()); //店舗のレビューを取得する
          		
         model.addAttribute("restaurants", restaurants);
-        model.addAttribute("reviews", reviews);
+       // model.addAttribute("reviews", reviews);
+        model.addAttribute("reviewPage", reviewPage);
          
         return "review/index";
    }
