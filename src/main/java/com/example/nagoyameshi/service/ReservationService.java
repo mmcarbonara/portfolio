@@ -29,10 +29,9 @@ public class ReservationService {
 		Restaurants restaurantId = restaurantRepository.getReferenceById(reservationRegisterForm.getRestaurantId());
 		User user = userRepository.getReferenceById(reservationRegisterForm.getUserId());
 		
-		
 		reservation.setRestaurantId(restaurantId);
 		reservation.setUser(user);
-		reservation.setNumberOfPeople(reservationRegisterForm.getNumberOfPeople());
+		reservation.setNumberOfPeople(reservationRegisterForm.getNumberOfPeople());	
 		
 		reservationRepository.save(reservation);
 	}
@@ -41,11 +40,12 @@ public class ReservationService {
 	public boolean isWithcapacity(Integer numberOfPeople, Integer capacity) {
 		return numberOfPeople <= capacity;
 	}
-	//金額を計算する
-	public Integer calculateAmount(Integer numberOfPeople, Integer price) {
-		int amount = price * (int)numberOfPeople;
-		return amount;
-	}
+	
+	//定休日（月曜でないかを確認する）
+  //  public boolean isHoliday(String reservedDate) {
+        // 予約日が月曜日なら定休日
+   //     return reservedDate != null && reservedDate.getHoliday() == DayOfWeek.MONDAY;
+ //   }
 }
     
 	// 予約時間が営業時間内であるかどうかを確認する

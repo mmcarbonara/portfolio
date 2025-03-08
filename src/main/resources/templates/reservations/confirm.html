@@ -27,7 +27,7 @@
 						
 						<form method="post" th:action="@{/restaurants/__${restaurants.getId()}__/reservations/create}" th:object="${reservationRegisterForm}">
 							<input type="hidden" th:field="*{restaurantId}">
-							<input type="hidden" th:field="*{user}">
+							<input type="hidden" th:field="*{userId}">
 							<input type="hidden" th:field="*{reservedDate}">
 							<input type="hidden" th:field="*{reservedTime}">
 							<input type="hidden" th:field="*{numberOfPeople}">

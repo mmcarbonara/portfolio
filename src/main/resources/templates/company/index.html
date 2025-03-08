@@ -23,6 +23,8 @@
 							</ol>
 						 </nav>
 						 
+						 <h2 class="text-center">企業情報</h2>
+						 
 						 <div class="container">
 							 <div class="row">
 								 <div class="col-lg-8 container mb-4">
@@ -92,7 +94,7 @@
 										 </div>
 										 
 										 <div class="col">
-											 <span th:text="${company.getEstablishment()}"></span>
+											 <span th:text="${company.getNumberOfEmployees()}"></span>
 										 </div>
 									 </div>		
 								 </div>
@@ -107,5 +109,5 @@
 			<div th:replace="~{fragment :: footer}"></div>
 		</div>
 		
-		<div th:replace="~{fragment :: scripts}">
+		<div th:replace="~{fragment :: scripts}"></div>
 	</body>

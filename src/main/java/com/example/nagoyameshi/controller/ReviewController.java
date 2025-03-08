@@ -35,8 +35,7 @@ public class ReviewController {
 	}
 
     @GetMapping("/review")//レビュー一覧ページを表示させたい
-    public String index(//@PathVariable(name = "id") Integer id, 
-    		            @PageableDefault(page = 0, size = 10, sort = "id", direction = Direction.ASC) Pageable pageable,Model model) {
+    public String index(@PageableDefault(page = 0, size = 10, sort = "id", direction = Direction.ASC) Pageable pageable,Model model) {
     	
     	Page<Review> reviewPage;
     	
@@ -47,20 +46,21 @@ public class ReviewController {
     	 return "review/index"; 
 }
     @GetMapping("/restaurants/{id}/review")  //店舗詳細ページからレビュー投稿一覧を表示
-    public String review(@PathVariable(name = "id") Integer id, Pageable pageable,Model model) {
+    public String review(@PathVariable(name = "id") Integer id, 
+    					Model model, 
+    					@PageableDefault(page=0, size = 10, sort = "id", direction = Direction.ASC) Pageable pageable) {
          Restaurants restaurants = restaurantRepository.getReferenceById(id);
-       	Page<Review> reviewPage;
+         
+         Page<Review> reviewPage;
     	
     	reviewPage = reviewRepository.findAll(pageable);
- 	//	List<Review> reviews = reviewRepository.findByRestaurantId(restaurants.getRestaurantId()); //店舗のレビューを取得する
          		
         model.addAttribute("restaurants", restaurants);
-       // model.addAttribute("reviews", reviews);
         model.addAttribute("reviewPage", reviewPage);
          
         return "review/index";
    }
-    
+   
     @GetMapping("/restaurants/{id}/review/input")  //レビューの投稿画面の表示
     public String reviewInput(@PathVariable(name = "id") Integer id, Model model) {
  	   Restaurants restaurants = restaurantRepository.getReferenceById(id);
@@ -70,7 +70,7 @@ public class ReviewController {
  	   model.addAttribute("restaurants", restaurants);
  	   model.addAttribute("reviewInputForm",reviewInputForm); //フォームを渡す
 
-        return "review/input";  // 店舗詳細ページのテンプレートを返す
+        return "review/input";  // レビュー投稿ページのテンプレートを返す
     }
     
     @GetMapping("/restaurants/{id}/review/edit")  //レビューの編集ページの表示
@@ -82,7 +82,7 @@ public class ReviewController {
  	   model.addAttribute("restaurants", restaurants);
  	   model.addAttribute("reviewEditForm",reviewEditForm); //フォームを渡す
 
-        return "review/edit";  // 店舗詳細ページのテンプレートを返す
+        return "review/edit";  // 店舗編集ページのテンプレートを返す
     }
     
     @PostMapping("/restaurants/{id}/delete") //店舗詳細ページからレビューの削除モーダル

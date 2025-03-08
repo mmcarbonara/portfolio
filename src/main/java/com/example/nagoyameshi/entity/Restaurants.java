@@ -2,6 +2,8 @@ package com.example.nagoyameshi.entity;
 
 import java.sql.Timestamp;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -48,9 +50,11 @@ public class Restaurants {
 	private String holiday;
 	
 	@Column(name = "opening_time")
+	@DateTimeFormat(pattern = "HH:mm")
 	private String openingTime;
 	
 	@Column(name = "closing_time", insertable = false)
+	@DateTimeFormat(pattern = "HH:mm")
 	private String closingTime;
 	
 	@Column(name = "price")

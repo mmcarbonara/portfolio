@@ -58,6 +58,7 @@ public class ReservationController {
 	  Restaurants restaurants = restaurantRepository.getReferenceById(id);
 	  Integer numberOfPeople = reservationInputForm.getNumberOfPeople();
 	  Integer capacity = restaurants.getCapacity();
+	//  LocalDate  reservedDate = reservationInputForm.getReservedDate();
 	  
 	  
 	  
@@ -67,6 +68,14 @@ public class ReservationController {
 			  FieldError fieldError = new FieldError(bindingResult.getObjectName(), "numberOfPeople","予約人数が定員を超えています"); //エラーを取得してfieldErrorに渡す
 			  bindingResult.addError(fieldError); //エラーの結果を追加する
 		  }
+		  
+	  // 予約日が月曜日かどうかをチェック
+//	  if (reservedDate != null && reservedDate.getDayOfWeek() == DayOfWeek.MONDAY) {
+		     //  FieldError fieldError = new FieldError(bindingResult.getObjectName(), "reservationDate", "月曜日は定休日です。予約できません。"); //エラーを取得する
+		     //  bindingResult.addError(fieldError);
+		  //  }
+	  
+	  
 	  } 
 	  
 	  //エラー時には再度ページを表示させる
@@ -107,16 +116,11 @@ public class ReservationController {
       //人数
 	  Integer numberOfPeople = reservationInputForm.getNumberOfPeople(); 
 	  
-	  //料金の計算
-	  Integer price = restaurants.getPrice();
-	  Integer amount = reservationService.calculateAmount(numberOfPeople,price);
-	  
 	  ReservationRegisterForm reservationRegisterForm = new ReservationRegisterForm(restaurants.getId(),
 			  																		user.getId(),
-			  																		reservedDate.toString(),
+			  																		reservationInputForm.getReservedDate(),
 			                                                                        reservedTime.toString(),
-			                                                                        reservationInputForm.getNumberOfPeople(),
-			                                                                        amount
+			                                                                        reservationInputForm.getNumberOfPeople() 
 			                                                                        );
 	 
 	  model.addAttribute("restaurants", restaurants);

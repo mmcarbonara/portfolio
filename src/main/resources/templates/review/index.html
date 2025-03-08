@@ -29,22 +29,23 @@
             </nav>
             
               <div th:if="${errorMessage}" class="alert alert-danger">
-              <span th:text="${errorMessage}"></span>
+                <span th:text="${errorMessage}"></span>
+              </div>
 			
 			<div>
 			   <h1 class="mb-4 text-center" th:text="${restaurants.getName()} + 'のレビュー一覧'"></h1>
             </div>
 			<!--レビューの表示-->
 
-　　　　　　　<div th:unless="${#lists.isEmpty(reviews)}" class="row row-cols1 row-cols-md-2 g-4 mb-4">
-				<div class="col">
+　　　　　　　<!--<div th:if="${#lists.isEmpty(reviews)}" class="row row-cols1 row-cols-md-2 g-4 mb-4">
+				<div class="col" th:each="review : ${reviewPage}">
 					<div class="card">
 						<div class="card-body">
 							<div class="d-flex justify-content-between">
-							<!--名前の表示OK-->
+							<!名前の表示OK
 							<h3 class="font-weight-bold" th:text="${review.getUser().getName()}"></h3>
 															
-　　　　　　　　　　　　　　　　　<!--名前以外のレビュー内容OK-->
+　　　　　　　　　　　　　　　　　<!名前以外のレビュー内容OK
 								<div class="review-item"> 
 									<div class="star-rating">
 										 <span th:each="star : ${#numbers.sequence(1,5)}" th:text="${star <= review.getScore()} ? '&#9733;' : '&#9734;'"></span>
@@ -57,7 +58,30 @@
 						　 </div>
 						</div>
 					</div>
-				</div>	
+				</div>-->	
+				<div th:if="${#lists.isEmpty(reviews)}" class="row row-cols1 row-cols-md-2 g-4 mb-4">
+					<div class="col" th:each="review : ${reviewPage}">
+						<div class="card">
+							<div class="card-body">
+								<div class="d-flex justify-content-between">
+									<!--名前の表示-->
+									<h3 class="font-weight-bold" th:text="${review.getUser().getName()}"></h3>
+								</div>
+								
+								<!--名前以外のレビュー内容表示-->
+								<div class="review-item">
+									<div class="star-rating">
+										<span th:each="star : ${#numbers.sequence(1,5)}" th:text="${star <= review.getScore()} ? '&#9733;' : '&#9734;'"></span>
+									</div>	
+									<p th:text="${#dates.format(review.getCreatedAt(), 'yyyy年MM月dd日')}"></p>
+									<p th:text="${review.getContent}"></p>
+								</div>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+				
 		 </div>
 
             
@@ -67,19 +91,19 @@
 					<ul class="pagination">
 						<li class="page-item">
 						   <span th:if="${reviewPage.isFirst()}" class="page-link disabled">前</span>
-						   <a th:unless="${reviewPage.isFirst()}" th:href="@{/review(page = ${reviewPage.getNumber() -1})}" class="page-link nagoymeshi-page-link">前</a>
+						   <a th:unless="${reviewPage.isFirst()}" th:href="@{/review(page = ${reviewPage.getNumber() -1})}" class="page-link nagoyameshi-page-link">前</a>
 						</li>
 							<li th:each="i : ${#numbers.sequence(0, reviewPage.getTotalPages() -1)}" class="page-item">
 							  <span th:if="${i == reviewPage.getNumber()}" class="page-link active nagoyameshi-active" th:text="${i + 1}"></span>
-							  <a th:unless="${i == reviewPage.getNumber()}" th:href="@{/review(page = ${i})}" class="page-link nagoyamshi-page-link" th:text="${i + 1}"></a>
+							  <a th:unless="${i == reviewPage.getNumber()}" th:href="@{/review(page = ${i})}" class="page-link nagoyameshi-page-link" th:text="${i + 1}"></a>
 							</li>
-							  <li class="page-item">
-								<span th:if="${reviewPage.isLast()}" class="page-link disabled">次</span>
-								<a th:unless="${reviewPage.isLast()}" th:href="@{/review(page = ${reviewPage.getNumber() + 1})}" class="page-link nagoyameshi-page-link">次</a>
-							  </li>
-						</ul>
-					</nav>
-				</div>
+						    <li class="page-item">
+							  <span th:if="${reviewPage.isLast()}" class="page-link disabled">次</span>
+							  <a th:unless="${reviewPage.isLast()}" th:href="@{/review(page = ${reviewPage.getNumber() + 1})}" class="page-link nagoyameshi-page-link">次</a>
+							</li>
+					</ul>
+				</nav>
+			 </div>
             
                 
             

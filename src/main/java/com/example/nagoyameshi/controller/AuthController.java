@@ -42,6 +42,11 @@ public class AuthController {
 		return "auth/signup";
 	}
 	
+	@GetMapping("/company")  //会社情報
+	public String company(Model model) {
+		return "company/index";
+		}
+	
 	@PostMapping("/signup")
 	public String signup(@ModelAttribute @Validated SignupForm signupForm, BindingResult bindingResult, RedirectAttributes redirectAttributes, HttpServletRequest httpServletRequest) {
 		//メールアドレスが登録済みであれば、BindingResultオブジェクトにエラー内容を追加する

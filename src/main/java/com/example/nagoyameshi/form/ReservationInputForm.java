@@ -5,11 +5,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 
-
+@Data
 public class ReservationInputForm {
-	//private String openingTime;
-	//private String closingTime;
 	
 	@NotBlank(message = "予約日を入力してください")
 	private String reservedDate;
@@ -22,21 +21,6 @@ public class ReservationInputForm {
 	@Min(value = 1, message = "人数は１人以上に設定してください")
 	private Integer numberOfPeople;
 	
-	//セッターゲッター
-	public Integer getNumberOfPeople() {
-		// TODO 自動生成されたメソッド・スタブ
-		return null;
-	}
-
-	public String getReservedTime() {
-		// TODO 自動生成されたメソッド・スタブ
-		return null;
-	}
-
-	public String getReservedDate() {
-		// TODO 自動生成されたメソッド・スタブ
-		return null;
-	} 
 }
 
 
