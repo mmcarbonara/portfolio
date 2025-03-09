@@ -1,5 +1,12 @@
 package com.example.nagoyameshi.service;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,9 +27,9 @@ public class ReservationService {
 	public ReservationService(ReservationRepository reservationRepository, RestaurantRepository restaurantRepository,UserRepository userRepository) {
 		this.reservationRepository = reservationRepository;
 		this.restaurantRepository = restaurantRepository;
-		this.userRepository = userRepository;
+    	this.userRepository = userRepository;
 	}
-
+	
 	@Transactional  //フォームの送信先担当
 	public void create(ReservationRegisterForm reservationRegisterForm) {
 		Reservation reservation = new Reservation();
@@ -35,42 +42,43 @@ public class ReservationService {
 		
 		reservationRepository.save(reservation);
 	}
-
+	
 	//予約人数が定員以下かどうか確認する
-	public boolean isWithcapacity(Integer numberOfPeople, Integer capacity) {
+    public boolean isWithcapacity(Integer numberOfPeople, Integer capacity) {
 		return numberOfPeople <= capacity;
 	}
-	
-	//定休日（月曜でないかを確認する）
-  //  public boolean isHoliday(String reservedDate) {
-        // 予約日が月曜日なら定休日
-   //     return reservedDate != null && reservedDate.getHoliday() == DayOfWeek.MONDAY;
- //   }
-}
     
-	// 予約時間が営業時間内であるかどうかを確認する
-    // SimpleDateFormat sdFormatDateTime = new SimpleDateFormat("HH:mm"); //StringからTimeに変換して比較する
-	// public boolean isWithinBusinessHours(String reservedTime, String openingTime, String closingTime) {
-  //  	return !reservedTime.isBefore(openingTime) && !reservedTime.isAfter(closingTime);
-	//}
-	 
+	//定休日（月曜でないかを確認する）
+    public boolean isHoliday(String reservedDate, String regularHolidays) {
+    	//データベースに入っているデータを配列に曜日の配列に変換する。複数の曜日があれば分割される。
+    	List<String> regularHolidaysList =  Arrays.asList(regularHolidays.split(","));
+    	// 予約日をLocalDateに変換
+        LocalDate reservationLocalDate = LocalDate.parse(reservedDate);
+
+        // 予約の曜日を取得
+        DayOfWeek reservationDayOfWeek = reservationLocalDate.getDayOfWeek();
+        
+        // 定休日と照合
+        return regularHolidaysList.stream()
+                                           .anyMatch(holiday -> DayOfWeek.valueOf(holiday.toUpperCase())
+                                                                          .equals(reservationDayOfWeek));
+
+
+     
+    }
+
 	 // 営業時間内かどうかを確認するメソッド
-	  //  public boolean isWithinBusinessHours(String reservedTime, String openingTime, String closingTime) {
-	        // "HH:mm" の形式で文字列を LocalTime に変換
-	   //     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+     public boolean isWithinBusinessHours(String reservedTime, String openingTime, String closingTime) {
+	        //"HH:mm" の形式で文字列を LocalTime に変換
+	      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+	      DateTimeFormatter dataFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
 	        // 文字列を LocalTime に変換
-	    //    LocalTime reserved = LocalTime.parse(reservedTime, formatter);
-	    //    LocalTime opening = LocalTime.parse(openingTime, formatter);
-	     //   LocalTime closing = LocalTime.parse(closingTime, formatter);
+	       LocalTime reserved = LocalTime.parse(reservedTime, formatter);
+	       LocalTime opening = LocalTime.parse(openingTime, dataFormatter);
+	       LocalTime closing = LocalTime.parse(closingTime, dataFormatter);
 
 	        // 予約時間が営業時間内かどうかを比較
-	     //   return !reserved.isBefore(opening) && !reserved.isAfter(closing);
-	 //   }
-
-
-
-
-	
-	
-
+	        return !reserved.isBefore(opening) && !reserved.isAfter(closing);
+	    }
+}

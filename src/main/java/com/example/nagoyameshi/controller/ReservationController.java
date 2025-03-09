@@ -58,9 +58,7 @@ public class ReservationController {
 	  Restaurants restaurants = restaurantRepository.getReferenceById(id);
 	  Integer numberOfPeople = reservationInputForm.getNumberOfPeople();
 	  Integer capacity = restaurants.getCapacity();
-	//  LocalDate  reservedDate = reservationInputForm.getReservedDate();
-	  
-	  
+	  String reservedDate = reservationInputForm.getReservedDate();
 	  
 	  //定員がオーバーしてないか確認して、オーバーしてたらエラーメッセージ表示させる
 	  if(numberOfPeople !=null) {    
@@ -70,10 +68,17 @@ public class ReservationController {
 		  }
 		  
 	  // 予約日が月曜日かどうかをチェック
-//	  if (reservedDate != null && reservedDate.getDayOfWeek() == DayOfWeek.MONDAY) {
-		     //  FieldError fieldError = new FieldError(bindingResult.getObjectName(), "reservationDate", "月曜日は定休日です。予約できません。"); //エラーを取得する
-		     //  bindingResult.addError(fieldError);
-		  //  }
+	  if (reservedDate != null && reservationService.isHoliday(reservedDate, restaurants.getHoliday())) {
+		       FieldError fieldError = new FieldError(bindingResult.getObjectName(), "reservationDate", "月曜日は定休日です。予約できません。"); //エラーを取得する
+		       bindingResult.addError(fieldError);
+		    }
+
+		  
+		  //営業時間以外の時間に予約したらエラーメッセージを表示させる
+		    String reservedTime = reservationInputForm.getReservedTime();
+		    if(!reservationService.isWithinBusinessHours(reservedTime, restaurants.getOpeningTime(), restaurants.getClosingTime())) {
+		  	  bindingResult.addError(new FieldError("reservationInputForm", "reservedTime", "予約時間は営業時間内に設定してください"));
+		    }
 	  
 	  
 	  } 
@@ -91,15 +96,7 @@ public class ReservationController {
 	  
 	  return "redirect:/restaurants/{id}/reservations/confirm";
 }
-  //営業時間以外の時間に予約したらエラーメッセージを表示させる
-  //  LocalDate reservedTime = reservationInputForm.getReservedTime();
-  //  if(!reservationService.isWithinBusinessHours(reservedTime, restaurants.getOpeningTime(), restaurants.getClosingTime())) {
-  //	  bindingResult.addError(new FieldError("reservationInputForm", "reservedTime", "予約時間は営業時間内に設定してください"));
-  //  }
- 
-  
-  
-  
+
   @GetMapping("/restaurants/{id}/reservations/confirm")  //予約確認ページを表示させる
   public String confirm(@PathVariable(name = "id") Integer id,
 		  				@ModelAttribute ReservationInputForm reservationInputForm,
