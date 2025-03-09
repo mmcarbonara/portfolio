@@ -48,25 +48,22 @@ public class ReservationService {
 		return numberOfPeople <= capacity;
 	}
     
-	//定休日（月曜でないかを確認する）
-    public boolean isHoliday(String reservedDate, String regularHolidays) {
+	//定休日でないかを確認する）
+   public boolean isHoliday(String reservedDate, String regularHolidays) {
     	//データベースに入っているデータを配列に曜日の配列に変換する。複数の曜日があれば分割される。
-    	List<String> regularHolidaysList =  Arrays.asList(regularHolidays.split(","));
-    	// 予約日をLocalDateに変換
-        LocalDate reservationLocalDate = LocalDate.parse(reservedDate);
+  	List<String> regularHolidaysList =  Arrays.asList(regularHolidays.split(","));
+   	// 予約日をLocalDateに変換
+       LocalDate reservationLocalDate = LocalDate.parse(reservedDate);
 
-        // 予約の曜日を取得
+       // 予約の曜日を取得
         DayOfWeek reservationDayOfWeek = reservationLocalDate.getDayOfWeek();
-        
+      
         // 定休日と照合
         return regularHolidaysList.stream()
                                            .anyMatch(holiday -> DayOfWeek.valueOf(holiday.toUpperCase())
-                                                                          .equals(reservationDayOfWeek));
-
-
-     
+                                                                         .equals(reservationDayOfWeek));
     }
-
+    
 	 // 営業時間内かどうかを確認するメソッド
      public boolean isWithinBusinessHours(String reservedTime, String openingTime, String closingTime) {
 	        //"HH:mm" の形式で文字列を LocalTime に変換

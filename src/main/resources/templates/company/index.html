@@ -23,11 +23,11 @@
 							</ol>
 						 </nav>
 						 
-						 <h2 class="text-center">企業情報</h2>
-						 
+						 <h2 class="text-center">企業情報</h2><br>				 
 						 <div class="container">
 							 <div class="row">
 								 <div class="col-lg-8 container mb-4">
+									 
 									 <div class="row pb-2 mb-2 border-bottom">
 										 <div class="col-4">
 											 <span class="fw-bold">会社名</span>
@@ -84,7 +84,7 @@
 										 </div>
 										 
 										 <div class="col">
-											 <span th:text="${company.getEstablishment()}"></span>
+											 <span th:text="${company.getEstablishment() + '年'}"></span>
 										 </div>
 									 </div>		
 
@@ -94,7 +94,7 @@
 										 </div>
 										 
 										 <div class="col">
-											 <span th:text="${company.getNumberOfEmployees()}"></span>
+											 <span th:text="${company.getNumberOfEmployees() + '人'}"></span>
 										 </div>
 									 </div>		
 								 </div>
@@ -111,3 +111,4 @@
 		
 		<div th:replace="~{fragment :: scripts}"></div>
 	</body>
+</html>

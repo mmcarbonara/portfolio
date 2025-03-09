@@ -63,7 +63,7 @@ public class RestaurantController {
 		}
 	}      else if(categories !=null) {
 	   	if(order !=null && order.equals("priceAsc")) {
-	   		restaurantPage = restaurantRepository.findByCategoriesIdOrderByCreatedAtAsc(categories, pageable);
+	   		restaurantPage = restaurantRepository.findByCategoriesIdOrderByPriceAsc(categories, pageable);
 	   	} else {
 	   		restaurantPage = restaurantRepository.findByCategoriesIdOrderByCreatedAtDesc(categories, pageable);  //カテゴリ検索
 	   	}
@@ -91,7 +91,7 @@ public class RestaurantController {
    @GetMapping("/{id}")  //店舗の詳細ページ
    public String show(@PathVariable(name = "id") Integer id, Model model) {
 	   Restaurants restaurants = restaurantRepository.getReferenceById(id);
-	  List<Review> reviews = reviewRepository.findByRestaurantId(restaurants, null); //店舗のレビューを取得する   要検討
+	  List<Review> reviews = reviewRepository.findByRestaurant(restaurants, null); //店舗のレビューを取得する   要検討
 	   
 	   model.addAttribute("restaurants", restaurants);
 	   model.addAttribute("reviews", reviews);

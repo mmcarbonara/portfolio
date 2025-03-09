@@ -39,7 +39,7 @@ public class ReviewController {
     	
     	Page<Review> reviewPage;
     	
-    	reviewPage = reviewRepository.findAll(pageable);
+    	reviewPage = reviewRepository.findAll(pageable);  //全ての店舗のデータを取得
     		
     	 model.addAttribute("reviewPage",reviewPage); 
     	
@@ -53,7 +53,7 @@ public class ReviewController {
          
          Page<Review> reviewPage;
     	
-    	reviewPage = reviewRepository.findAll(pageable);
+    	reviewPage = reviewRepository.findByRestaurantId(id, pageable);  //特定店舗のデータのみ取得
          		
         model.addAttribute("restaurants", restaurants);
         model.addAttribute("reviewPage", reviewPage);

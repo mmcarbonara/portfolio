@@ -19,7 +19,7 @@ public interface RestaurantRepository extends JpaRepository<Restaurants, Integer
 	public Page<Restaurants> findByPriceLessThanEqualOrderByCreatedAtDesc(Integer price, Pageable pageable); //値段で検索(新着順)
 	public Page<Restaurants> findByPriceLessThanEqualOrderByPriceAsc(Integer price, Pageable pageable); //値段で検索(安い順)
 	public Page<Restaurants> findByCategoriesIdOrderByCreatedAtDesc(Integer categoriesId, Pageable pageable); //カテゴリIDで検索(新着順)
-	public Page<Restaurants> findByCategoriesIdOrderByCreatedAtAsc(Integer categoriesId, Pageable pageable); //カテゴリIDで検索(安い順)
+	public Page<Restaurants> findByCategoriesIdOrderByPriceAsc(Integer categoriesId, Pageable pageable); //カテゴリIDで検索(安い順)
 	public Page<Restaurants> findAllByOrderByCreatedAtDesc(Pageable pageable); //全てのデータを取得する（新着順）
 	public Page<Restaurants> findAllByOrderByPriceAsc(Pageable pageable); //全てのデータを取得する(安い順)
 	
@@ -27,6 +27,7 @@ public interface RestaurantRepository extends JpaRepository<Restaurants, Integer
 	
     
 	List<Restaurants> findAllByOrderByCategories_IdAscCreatedAtDesc();
+
 	
 }
 

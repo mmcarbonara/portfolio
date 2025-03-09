@@ -68,7 +68,7 @@ public class ReservationController {
 		  }
 		  
 	  // 予約日が月曜日かどうかをチェック
-	  if (reservedDate != null && reservationService.isHoliday(reservedDate, restaurants.getHoliday())) {
+	if (reservedDate != null && reservationService.isHoliday(reservedDate, restaurants.getHoliday())) {
 		       FieldError fieldError = new FieldError(bindingResult.getObjectName(), "reservationDate", "月曜日は定休日です。予約できません。"); //エラーを取得する
 		       bindingResult.addError(fieldError);
 		    }

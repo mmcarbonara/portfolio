@@ -193,17 +193,12 @@
 														<!--名前の表示OK-->
 														<h3 class="font-weight-bold" th:text="${review.getUser().getName()}"></h3>
 															
-													
-															
-														 <!--<span sec:authorize="isAuthentucated()" th:if="${#authentication.principal.user.id == review.getUser().getId()}">-->
-															 
-														<!--要訂正：編集のボタンの位置-->
-                                                              <!--<a class="text-right" th:href="@{restaurants/__${restaurants.getId()}__/review/__${review.getId()}__/edit}" class="me-2">編集</a>-->
-														 	  <!--<a th:href="#" class="nagoyameshi-link-danger" data-bs-toggle="modal" th:data-bs-target="${'deleteReviewModal' + review.getId()}">削除</a>-->
-														
-														<!--削除用ボタン
-														<a href="#" class="nagoyameshi-link-danger" data-bs-toggle="modal" th:data-bs-target="${'#deleteReviewModal' + review.getId()}">削除</a>
-														
+													     <!--現在ログインしているユーザーとレビューの投稿者が一致であれば編集と削除を表示させる
+														 <div th:if="${#authentication.principal.user.id == review.getUser().getId()}">
+															  <a th:href="@{restaurants/__${restaurants.getId()}__/review/__${review.getId()}__/edit}" class="me-2">編集</a>
+															  <a th:href="#" class="nagoyameshi-link-danger" data-bs-toggle="modal" th:data-bs-target="${'deleteReviewModal' + review.getId()}">削除</a>
+														 </div>
+												
 														<!--削除用モーダル
 														<div class="modal fade" th:id="${'deleteReviewModal' + review.getId()}" tabindex="-1" th:aria-labelledby="${'deleteReviewModalLabel' + review.getId()}"> 
 															<div class="modal-dialog">
@@ -219,13 +214,10 @@
 																	</div>
 																</div>
 															</div>
-														</div>-->	
-														 	
-														 	 
-														 	   
-														 	
-														 	    
-														 	  </div>
+														</div>-->
+														
+												 </div>	
+														 	  
 														 </span>
 													 </div>
 													 
@@ -255,9 +247,6 @@
 							   		 <div th:if="${not #lists.isEmpty(reviews)}">	    
 										<a th:href="@{/review/restaurants/__${restaurants.getId()}__/review}" class="row d-flex justify-content-center ">全てのレビューを見る</a> 
 									 </div>
-								
-								 
-								 
 								  
 					 </div>
 				          	     				          	                             

@@ -17,10 +17,6 @@ public class CompanyService {
 	         return companyRepository.findById(id);	     
 }
 
-		public static Optional<Company> getCompany() {
-			// TODO 自動生成されたメソッド・スタブ
-			return null;
-		}
 }
 
 
