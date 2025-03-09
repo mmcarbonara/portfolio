@@ -179,7 +179,7 @@
 				                <!--ログインしていたら表示させるようにするOK-->
 				                <h2 class="mb-4 text-center">レビュー</h2>
 				                <div sec:authorize="isAuthenticated()" class="form-group text-center">
-									<form method="get" th:action="@{/restaurants/__${restaurants.getId()}__/review/input}">
+									<form method="get" th:action="@{/review/restaurants/__${restaurants.getId()}__/review/input}">
 										<button type="submit" class="btn text-white shadow-sm nagoyameshi-btn">レビュー投稿する</button>
 									</form>
 								</div>
