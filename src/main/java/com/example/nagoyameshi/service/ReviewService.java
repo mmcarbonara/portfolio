@@ -12,9 +12,6 @@ public class ReviewService {
         this.reviewRepository = reviewRepository;
     }
 
-    // 特定のレストランのレビューを取得
-//    public List<Review> getReviewsByRestaurantId(Restaurants restaurantId) {
-        // レストランIDに基づいてレビューを取得
-      //  return reviewRepository.findByRestaurantId(restaurantId);
+   
     }
 

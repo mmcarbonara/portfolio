@@ -197,7 +197,7 @@
 														 <div th:if="${#authentication.principal.user.id == review.getUser().getId()}">
 															  <a th:href="@{restaurants/__${restaurants.getId()}__/review/__${review.getId()}__/edit}" class="me-2">編集</a>
 															  <a th:href="#" class="nagoyameshi-link-danger" data-bs-toggle="modal" th:data-bs-target="${'deleteReviewModal' + review.getId()}">削除</a>
-														 </div>
+														 </div>-->
 												
 														<!--削除用モーダル
 														<div class="modal fade" th:id="${'deleteReviewModal' + review.getId()}" tabindex="-1" th:aria-labelledby="${'deleteReviewModalLabel' + review.getId()}"> 

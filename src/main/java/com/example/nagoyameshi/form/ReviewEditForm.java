@@ -10,6 +10,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class ReviewEditForm {
+
 	public ReviewEditForm() {
 		// TODO 自動生成されたコンストラクター・スタブ
 	}

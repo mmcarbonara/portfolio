@@ -32,10 +32,6 @@ public class Reservation {
   @JoinColumn(name = "user_id")
   private User user;
   
-  @ManyToOne
-  @JoinColumn(name = "restaurant_price")
-  private Restaurants restaurantPrice;
-  
   @Column(name = "reserved_date")
   private LocalDate reservedDate;
   

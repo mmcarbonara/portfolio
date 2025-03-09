@@ -47,5 +47,6 @@ public class RestaurantRegisterForm {
 	
 	@NotNull(message = "カテゴリを入力してください")
 	private Categories categories;
+
 }
 

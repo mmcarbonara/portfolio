@@ -6,6 +6,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,12 +34,21 @@ public class ReservationService {
 	@Transactional  //フォームの送信先担当
 	public void create(ReservationRegisterForm reservationRegisterForm) {
 		Reservation reservation = new Reservation();
+		
 		Restaurants restaurantId = restaurantRepository.getReferenceById(reservationRegisterForm.getRestaurantId());
 		User user = userRepository.getReferenceById(reservationRegisterForm.getUserId());
+	
 		
 		reservation.setRestaurantId(restaurantId);
 		reservation.setUser(user);
 		reservation.setNumberOfPeople(reservationRegisterForm.getNumberOfPeople());	
+		
+	    //String型に変更する
+	    LocalDate reservedDate = LocalDate.parse(reservationRegisterForm.getReservedDate());
+	    reservation.setReservedDate(reservedDate);
+
+	    LocalTime reservedTime = LocalTime.parse(reservationRegisterForm.getReservedTime());
+	    reservation.setReservedTime(reservedTime);
 		
 		reservationRepository.save(reservation);
 	}
@@ -48,20 +58,27 @@ public class ReservationService {
 		return numberOfPeople <= capacity;
 	}
     
-	//定休日でないかを確認する）
+	//定休日でないかを確認する
    public boolean isHoliday(String reservedDate, String regularHolidays) {
-    	//データベースに入っているデータを配列に曜日の配列に変換する。複数の曜日があれば分割される。
+	 
+    // 予約日をLocalDateに変換
+    LocalDate reservationLocalDate = LocalDate.parse(reservedDate);
+       
+    //データベースに入っているデータを配列に曜日の配列に変換する。複数の曜日があれば分割される。
   	List<String> regularHolidaysList =  Arrays.asList(regularHolidays.split(","));
-   	// 予約日をLocalDateに変換
-       LocalDate reservationLocalDate = LocalDate.parse(reservedDate);
 
-       // 予約の曜日を取得
-        DayOfWeek reservationDayOfWeek = reservationLocalDate.getDayOfWeek();
+    // 予約の曜日を取得
+    DayOfWeek reservationDayOfWeek = reservationLocalDate.getDayOfWeek();
+  	
+  	//予約の曜日を取得先生アドバイス
+  	DateTimeFormatter formmater = DateTimeFormatter.ofPattern("E", Locale.JAPANESE);
+  	System.out.println(reservationLocalDate.format(formmater));
       
-        // 定休日と照合
+    // 定休日と照合
         return regularHolidaysList.stream()
                                            .anyMatch(holiday -> DayOfWeek.valueOf(holiday.toUpperCase())
-                                                                         .equals(reservationDayOfWeek));
+                                                                         .equals(reservedDate));
+        //.equals(reservationDayOfWeek));
     }
     
 	 // 営業時間内かどうかを確認するメソッド

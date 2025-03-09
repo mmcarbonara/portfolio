@@ -36,30 +36,7 @@
 			   <h1 class="mb-4 text-center" th:text="${restaurants.getName()} + 'のレビュー一覧'"></h1>
             </div>
 			<!--レビューの表示-->
-
-　　　　　　　<!--<div th:if="${#lists.isEmpty(reviews)}" class="row row-cols1 row-cols-md-2 g-4 mb-4">
-				<div class="col" th:each="review : ${reviewPage}">
-					<div class="card">
-						<div class="card-body">
-							<div class="d-flex justify-content-between">
-							<!名前の表示OK
-							<h3 class="font-weight-bold" th:text="${review.getUser().getName()}"></h3>
-															
-　　　　　　　　　　　　　　　　　<!名前以外のレビュー内容OK
-								<div class="review-item"> 
-									<div class="star-rating">
-										 <span th:each="star : ${#numbers.sequence(1,5)}" th:text="${star <= review.getScore()} ? '&#9733;' : '&#9734;'"></span>
-									</div>
-										<p th:text="${#dates.format(review.getCreatedAt(), 'yyyy年MM月dd日')}"></p>
-										<p th:text="${review.getContent}"></p>
-								 </div>
-													 
-								</div>
-						　 </div>
-						</div>
-					</div>
-				</div>-->	
-				<div th:if="${#lists.isEmpty(reviews)}" class="row row-cols1 row-cols-md-2 g-4 mb-4">
+			<div th:if="${#lists.isEmpty(reviews)}" class="row row-cols1 row-cols-md-2 g-4 mb-4">
 					<div class="col" th:each="review : ${reviewPage}">
 						<div class="card">
 							<div class="card-body">
