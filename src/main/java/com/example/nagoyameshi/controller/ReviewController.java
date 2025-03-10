@@ -8,7 +8,10 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +23,7 @@ import com.example.nagoyameshi.form.ReviewEditForm;
 import com.example.nagoyameshi.form.ReviewInputForm;
 import com.example.nagoyameshi.repository.RestaurantRepository;
 import com.example.nagoyameshi.repository.ReviewRepository;
+import com.example.nagoyameshi.service.ReviewService;
 
 @Controller
 @RequestMapping("/review")
@@ -27,11 +31,12 @@ public class ReviewController {
   //  private ReviewService reviewService;
     private ReviewRepository reviewRepository;
     private RestaurantRepository restaurantRepository;
+    private ReviewService reviewService;
     
-	public ReviewController(ReviewRepository reviewRepository,RestaurantRepository restaurantRepository) {
-	//	this.reviewService = reviewService;
+	public ReviewController(ReviewRepository reviewRepository,RestaurantRepository restaurantRepository, ReviewService reviewService) {
 		this.reviewRepository =reviewRepository;
 		this.restaurantRepository = restaurantRepository;
+		this.reviewService = reviewService;
 	}
 
     @GetMapping("/review")//レビュー一覧ページを表示させたい
@@ -93,4 +98,18 @@ public class ReviewController {
  	   
  	   return "restaurants/show";
     }
+    
+    @PostMapping("restaurants/review/create") //レビュー登録
+    public String create(@ModelAttribute @Validated ReviewInputForm reviewInputForm,BindingResult bindingResult, RedirectAttributes redirectAttriburtes) {
+    	if(bindingResult.hasErrors()) {
+    		return "review/input";
+    	}
+    	
+    	reviewService.create(reviewInputForm);
+    	redirectAttriburtes.addAttribute("successMessage", "レビューを登録しました");
+    	
+    	return "redirect:/review";
+    }
+    
+ 
 }

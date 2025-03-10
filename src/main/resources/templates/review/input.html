@@ -2,7 +2,6 @@
 <html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"> 
   <head>
     <div th:replace="~{fragment :: meta}"></div>
-
     <div th:replace="~{fragment :: styles}"></div>
     
     <!--Flatpicker-->
@@ -11,12 +10,12 @@
     <title>レビュー一覧</title>
   </head>
   <body>
-    <div class="nagoymeshi-wrapper">
+    <div class="nagoyameshi-wrapper">
     <!--ヘッダー-->
     <div th:replace="~{fragment :: header}"></div>
 
     <main>
-      <div class="container pt-4 pb-5 nagoyemeshi-container">
+      <div class="container pt-4 pb-5 nagoyameshi-container">
         <div class="row justify-content-center">
           <div class="col-xxl-9 col-xl-10 col-lg-11">
             <nav class="mb-4" style="--bs-breadcrumb-divider:'>';">
@@ -27,38 +26,44 @@
                 <li class="breadcrumb-item active" aria-current="page">レビュー投稿</li>
               </ol>
             </nav>
+            
+            <div th:if="${successMessage}" class="alert alert-info">  <!--レビューの投稿ができたら表示するメッセージ-->
+				<span th:text="${successMesssage}"></span>
+			</div>
 
             <h1 class="mb-4 text-center" th:text="${restaurants.getName()} + 'のレビュー投稿'"></h1>
             <!--フォームあとで確認-->
- 			<div method="post" th:action="@{/restaurants/review/create}"　th:object="${reviewInputForm}" entype="multipart/form/data">
+ 			<form method="post" th:action="@{/restaurants/review/create}"　th:object="${reviewInputForm}" enctype="multipart/form-data">
 				<input type="hidden" th:field="*{restaurantId}" th:value="${reviewInputForm.getRestaurantId()}"><!--restaurantIdを登録処理に渡す-->
 				
-				<div class="form-group row mb-3">
-					<div class="col-md-4">
-						<label for="score" class="col-form-label text-md-left fw-bold">評価</label>
-					</div>
-					<div class="col-md-8">
-						<div th:if="${#fields.hasErrors('score')}" class="text-danger small mb-2" th:errors="*{score}"></div>
-						<input type="number" class="form-control" th:field="*{score}">
-					</div>
-				</div>	 
+				<!--評価-->
+				<div class="form-group">
+					<label for="score" class="col-md-4 col-form-label text-md-left fw-bold">評価</label>
+					<select th:field="*{score}">
+						<option value="1">★</option>
+						<option value="2">★★</option>
+						<option value="3">★★★</option>
+						<option value="4">★★★★</option>
+						<option value="5">★★★★★</option>
+					</select>
+					<span th:if="${#fields.hasErrors('score')}"  th:errors="*{score}"></span>
+				</div>
 				
+				<!--コメント-->
 				<div class="form-group row mb-3">
-					<div class="col-md-4">
-						<label for="content" class="col-form-label text-md-left fw-bold">コメント</label>
-					</div>
-					<div class="col-md-8">
-						<div th:if="${#fields.hasErrors('content')}" class="text-danger small mb-2" th:errors="*{content}"></div>
-						<textarea type="number" class="form-control" th:field="*{content}" cols="30" row="5"></textarea>
-					</div>
-				 </div>	 
+					<label for="content" class="col-md-4 col-form-label text-md-left fw-bold">コメント</label>
+				   <div class="col-md-8">
+					<textarea th:field="*{content}" required=""  class="form-control" cols="30" rows="5"></textarea>
+					<span th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></span>
+                   </div>
+				</div>
 				
-				 <!--レビューの投稿ボタン-->
-			     <div class="form-group d-flex justify-content-center my-4">
-			　     　<button type="submit" class="btn text-white shadow-sm w-50 nagoyameshi-btn">投稿</button>
-			    </div>            
-			</form>
-            
+				<!--投稿レビューの登録ボタン-->
+				<div class="d-flex justify-content-center align-items-center">
+					<button type="submit" class="btn text-white shadow-sm w-50 nagoyameshi-btn">投稿</button>
+				</div>
+			</form>	
+				
           </div>
         </div>
       </div>

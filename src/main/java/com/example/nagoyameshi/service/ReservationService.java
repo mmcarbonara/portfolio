@@ -70,16 +70,20 @@ public class ReservationService {
     // 予約の曜日を取得
     DayOfWeek reservationDayOfWeek = reservationLocalDate.getDayOfWeek();
   	
-  	//予約の曜日を取得先生アドバイス
-  	DateTimeFormatter formmater = DateTimeFormatter.ofPattern("E", Locale.JAPANESE);
-  	System.out.println(reservationLocalDate.format(formmater));
+  	//予約の曜日を取得先生
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE", Locale.JAPANESE);
+    System.out.println(reservationLocalDate.format(formatter));
       
     // 定休日と照合
-        return regularHolidaysList.stream()
-                                           .anyMatch(holiday -> DayOfWeek.valueOf(holiday.toUpperCase())
-                                                                         .equals(reservedDate));
-        //.equals(reservationDayOfWeek));
+    if (reservationDayOfWeek != DayOfWeek.MONDAY) {
+    	return regularHolidaysList.stream()
+                .anyMatch(holiday -> DayOfWeek.valueOf(holiday.toUpperCase())
+                                              .equals(reservationDayOfWeek)); 
     }
+       return false;
+    }
+    
+
     
 	 // 営業時間内かどうかを確認するメソッド
      public boolean isWithinBusinessHours(String reservedTime, String openingTime, String closingTime) {
