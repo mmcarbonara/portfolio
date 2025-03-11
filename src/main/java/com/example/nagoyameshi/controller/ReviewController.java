@@ -100,7 +100,7 @@ public class ReviewController {
  	  return "redirect:/restaurants/{id}";
     }
     
-    @PostMapping("restaurants/review/create") //レビュー登録
+    @PostMapping("/review/restaurants/review/create") //レビュー登録
     public String create(@ModelAttribute @Validated ReviewInputForm reviewInputForm,BindingResult bindingResult, RedirectAttributes redirectAttriburtes) {
     	if(bindingResult.hasErrors()) {
     		return "review/input";
@@ -112,7 +112,7 @@ public class ReviewController {
     	return "redirect:/review";
     }
     
-    @PostMapping("restaurants/review/update") //レビュー編集
+    @PostMapping("/review/restaurants/review/update") //レビュー編集
     public String update(@ModelAttribute @Validated ReviewEditForm reviewEditForm,BindingResult bindingResult, RedirectAttributes redirectAttriburtes) {
     	if(bindingResult.hasErrors()) {
     		return "review/edit";

@@ -33,7 +33,7 @@
 
             <h1 class="mb-4 text-center" th:text="${restaurants.getName()} + 'のレビュー投稿'"></h1>
             <!--フォームあとで確認-->
- 			<form method="post" th:action="@{/restaurants/review/create}"　th:object="${reviewInputForm}" enctype="multipart/form-data">
+ 			<form method="post" th:action="@{/review/restaurants/review/create}"　th:object="${reviewInputForm}" enctype="multipart/form-data">
 				<input type="hidden" th:field="*{restaurantId}" th:value="${reviewInputForm.getRestaurantId()}"><!--restaurantIdを登録処理に渡す-->
 				
 				<!--評価-->

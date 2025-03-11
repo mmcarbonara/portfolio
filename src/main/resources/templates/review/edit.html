@@ -31,7 +31,7 @@
 				<span th:text="${successMesssage}"></span>
 			</div>
 
-            <h1 class="mb-4 text-center" th:text="${restaurants.getName()} + 'のレビュー投稿'"></h1>
+            <h1 class="mb-4 text-center" th:text="${restaurants.getName()} + 'のレビュー編集'"></h1>
             <!--フォームあとで確認-->
  			<form method="post" th:action="@{/restaurants/review/update}"　th:object="${reviewEditForm}" enctype="multipart/form-data">
 				<input type="hidden" th:field="*{restaurantId}" th:value="${reviewEditForm.getRestaurantId()}"><!--restaurantIdを登録処理に渡す-->
