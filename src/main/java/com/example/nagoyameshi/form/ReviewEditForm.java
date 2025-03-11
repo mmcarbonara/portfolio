@@ -11,10 +11,6 @@ import lombok.Data;
 @AllArgsConstructor
 public class ReviewEditForm {
 
-	public ReviewEditForm() {
-		// TODO 自動生成されたコンストラクター・スタブ
-	}
-
 	private Integer restaurantId;
 
 	@NotNull(message = "評価してください")

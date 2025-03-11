@@ -19,31 +19,31 @@
       <div class="container pt-4 pb-5 nagoyemeshi-container">
         <div class="row justify-content-center">
           <div class="col-xxl-9 col-xl-10 col-lg-11">
-            <nav class="mb-4" style="--bs-breadcrumb-divider:'>';">
-              <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>
-                <li class="breadcrumb-item"><a th:href="@{/restaurants}">店舗一覧</a></li>
-                <li class="breadcrumb-item"><a th:href="@{/restaurants?restaurantsId=__${restaurants.getId()}__}">店舗詳細</a></li>
-                <li class="breadcrumb-item active" aria-current="page">レビュー一覧</li>
-              </ol>
-            </nav>
+           	 <nav class="mb-4" style="--bs-breadcrumb-divider:'>';">
+             	 <ol class="breadcrumb mb-0">
+                	<li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>
+                	<li class="breadcrumb-item"><a th:href="@{/restaurants}">店舗一覧</a></li>
+                	<li class="breadcrumb-item"><a th:href="@{/restaurants?restaurantsId=__${restaurants.getId()}__}">店舗詳細</a></li>
+               	    <li class="breadcrumb-item active" aria-current="page">レビュー一覧</li>
+              	 </ol>
+           	 </nav>
             
-              <div th:if="${errorMessage}" class="alert alert-danger">
+             <div th:if="${errorMessage}" class="alert alert-danger">
                 <span th:text="${errorMessage}"></span>
-              </div>
+             </div>
 			
-			<div>
+			 <div>
 			   <h1 class="mb-4 text-center" th:text="${restaurants.getName()} + 'のレビュー一覧'"></h1>
-            </div>
-			<!--レビューの表示-->
-			<div th:if="${#lists.isEmpty(reviews)}" class="row row-cols1 row-cols-md-2 g-4 mb-4">
+             </div>
+			 <!--レビューの表示-->
+			 <div th:if="${#lists.isEmpty(reviews)}" class="row row-cols1 row-cols-md-2 g-4 mb-4">
 					<div class="col" th:each="review : ${reviewPage}">
 						<div class="card">
 							<div class="card-body">
 								<div class="d-flex justify-content-between">
 									<!--名前の表示-->
 									<h3 class="font-weight-bold" th:text="${review.getUser().getName()}"></h3>
-								</div>
+								 </div>
 								
 								<!--名前以外のレビュー内容表示-->
 								<div class="review-item">
@@ -54,12 +54,12 @@
 									<p th:text="${review.getContent}"></p>
 								</div>
 								
-							</div>
-						</div>
-					</div>
+							 </div>
+						  </div>
+					 </div>
 				</div>
 				
-		 </div>
+	
 
             
             <!--ページネーション-->
@@ -83,7 +83,7 @@
 			 </div>
             
                 
-            
+            </div>
           </div>
         </div>
       </div>

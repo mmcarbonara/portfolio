@@ -1,12 +1,8 @@
 package com.example.nagoyameshi.service;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -58,32 +54,6 @@ public class ReservationService {
 		return numberOfPeople <= capacity;
 	}
     
-	//定休日でないかを確認する
-   public boolean isHoliday(String reservedDate, String regularHolidays) {
-	 
-    // 予約日をLocalDateに変換
-    LocalDate reservationLocalDate = LocalDate.parse(reservedDate);
-       
-    //データベースに入っているデータを配列に曜日の配列に変換する。複数の曜日があれば分割される。
-  	List<String> regularHolidaysList =  Arrays.asList(regularHolidays.split(","));
-
-    // 予約の曜日を取得
-    DayOfWeek reservationDayOfWeek = reservationLocalDate.getDayOfWeek();
-  	
-  	//予約の曜日を取得先生
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE", Locale.JAPANESE);
-    System.out.println(reservationLocalDate.format(formatter));
-      
-    // 定休日と照合
-    if (reservationDayOfWeek != DayOfWeek.MONDAY) {
-    	return regularHolidaysList.stream()
-                .anyMatch(holiday -> DayOfWeek.valueOf(holiday.toUpperCase())
-                                              .equals(reservationDayOfWeek)); 
-    }
-       return false;
-    }
-    
-
     
 	 // 営業時間内かどうかを確認するメソッド
      public boolean isWithinBusinessHours(String reservedTime, String openingTime, String closingTime) {

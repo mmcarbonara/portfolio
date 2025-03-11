@@ -17,7 +17,7 @@
     <main>
       <div class="container pt-4 pb-5 nagoyameshi-container">
         <div class="row justify-content-center">
-          <div class="col-xxl-9 col-xl-10 col-lg-11">
+          <div class="col-xl-5 col-lg-6 col-md-8">
             <nav class="mb-4" style="--bs-breadcrumb-divider:'>';">
               <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>
@@ -38,8 +38,8 @@
 				
 				<!--評価-->
 				<div class="form-group">
-					<label for="score" class="col-md-4 col-form-label text-md-left fw-bold">評価</label>
-					<select th:field="*{score}">
+					<label for="score" class="col-md-3 col-form-label text-md-left fw-bold">評価</label>
+					<select class="nagoyameshi-star" th:field="*{score}">
 						<option value="1">★</option>
 						<option value="2">★★</option>
 						<option value="3">★★★</option>
@@ -51,7 +51,7 @@
 				
 				<!--コメント-->
 				<div class="form-group row mb-3">
-					<label for="content" class="col-md-4 col-form-label text-md-left fw-bold">コメント</label>
+					<label for="content" class="col-md-3 col-form-label text-md-left fw-bold">コメント</label>
 				   <div class="col-md-8">
 					<textarea th:field="*{content}" required=""  class="form-control" cols="30" rows="5"></textarea>
 					<span th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></span>

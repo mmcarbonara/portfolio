@@ -78,25 +78,26 @@ public class ReviewController {
         return "review/input";  // レビュー投稿ページのテンプレートを返す
     }
     
-    @GetMapping("/restaurants/{id}/review/edit")  //レビューの編集ページの表示
-    public String reviewEdit(@PathVariable(name = "id") Integer id, Model model) {
- 	   Restaurants restaurants = restaurantRepository.getReferenceById(id);
- 	   ReviewEditForm reviewEditForm = new ReviewEditForm(); //レストランのidを入れる
- 	   reviewEditForm.setRestaurantId(id);
+    @GetMapping("/restaurants/{id}/review/{reviewId}/edit")  //レビューの編集ページの表示
+    public String reviewEdit(@PathVariable(name = "id") Integer id, @PathVariable(name = "reviewId") Integer reviewId, Model model) {
+    	Restaurants restaurants = restaurantRepository.getReferenceById(id);
+  	    Review review = reviewRepository.getReferenceById(reviewId);
+  	    ReviewEditForm reviewEditForm = new ReviewEditForm(review.getId(), review.getScore(), review.getContent());
  	   
- 	   model.addAttribute("restaurants", restaurants);
- 	   model.addAttribute("reviewEditForm",reviewEditForm); //フォームを渡す
+  	    model.addAttribute("restaurants", restaurants); 
+  	    model.addAttribute("review", review);
+  	    model.addAttribute("reviewEditForm",reviewEditForm);  //フォームを渡す
 
         return "review/edit";  // 店舗編集ページのテンプレートを返す
     }
     
-    @PostMapping("/restaurants/{id}/delete") //店舗詳細ページからレビューの削除モーダル
-    public String delete(@PathVariable(name = "id") Integer id,RedirectAttributes redirectAttributes) {
- 	   reviewRepository.deleteById(id);
+    @PostMapping("/restaurants/{id}/review/{reviewId}/delete") //店舗詳細ページからレビューの削除モーダル
+    public String delete(@PathVariable(name = "id")  Integer id, @PathVariable(name = "reviewId") Integer reviewId, RedirectAttributes redirectAttributes) {
+ 	   reviewRepository.deleteById(reviewId);
  	   
  	   redirectAttributes.addFlashAttribute("successMessage", "レビューを削除しました");
  	   
- 	   return "restaurants/show";
+ 	  return "redirect:/restaurants/{id}";
     }
     
     @PostMapping("restaurants/review/create") //レビュー登録
@@ -109,6 +110,18 @@ public class ReviewController {
     	redirectAttriburtes.addAttribute("successMessage", "レビューを登録しました");
     	
     	return "redirect:/review";
+    }
+    
+    @PostMapping("restaurants/review/update") //レビュー編集
+    public String update(@ModelAttribute @Validated ReviewEditForm reviewEditForm,BindingResult bindingResult, RedirectAttributes redirectAttriburtes) {
+    	if(bindingResult.hasErrors()) {
+    		return "review/edit";
+    	}
+    	
+    	reviewService.update(reviewEditForm);
+    	redirectAttriburtes.addAttribute("successMessage", "レビューを更新しました");
+    	
+    	return "redirect:/edit";
     }
     
  
