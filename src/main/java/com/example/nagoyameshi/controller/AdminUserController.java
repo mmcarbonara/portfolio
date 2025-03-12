@@ -15,6 +15,7 @@ import com.example.nagoyameshi.entity.User;
 import com.example.nagoyameshi.repository.UserRepository;
 
 @Controller
+//@RequestMapping("/admin/admin/users")
 @RequestMapping("/admin/users")
 public class AdminUserController {
 	private final UserRepository userRepository;
