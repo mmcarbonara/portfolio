@@ -29,8 +29,8 @@
 
             <h1 class="mb-4 text-center" th:text="${restaurants.getName()}"></h1>
 
-            <div th:if="${errorMessage}" class="alert alert-danger">
-              <span th:text="${errorMessage}"></span>
+            <div th:if="${successMessage}" class="alert alert-danger">
+              <span th:text="${successMessage}"></span>
             </div>
 
             <div class="mb-4">

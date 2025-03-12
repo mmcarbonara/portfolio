@@ -18,7 +18,7 @@ public class ReviewService {
     
     @Transactional  //レビューの登録機能
     public void create(ReviewInputForm reviewInputForm) {
-    Review review = new Review();
+    Review review = reviewRepository.getReferenceById(reviewInputForm.getRestaurantId());
     Review restaurantId = reviewRepository.getReferenceById(reviewInputForm.getRestaurantId());
     
     review.setScore(reviewInputForm.getScore());
@@ -29,7 +29,7 @@ public class ReviewService {
     
     @Transactional  //レビューの編集機能
     public void update(ReviewEditForm reviewEditForm) {
-    Review review = new Review();
+    Review review = reviewRepository.getReferenceById(reviewEditForm.getRestaurantId());
     Review restaurantId = reviewRepository.getReferenceById(reviewEditForm.getRestaurantId());
     
     review.setScore(reviewEditForm.getScore());

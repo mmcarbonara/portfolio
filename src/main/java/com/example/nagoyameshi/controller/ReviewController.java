@@ -100,7 +100,7 @@ public class ReviewController {
  	  return "redirect:/restaurants/{id}";
     }
     
-    @PostMapping("/review/restaurants/review/create") //レビュー登録
+    @PostMapping("/restaurants/{id}/review/{reviewId}/create") //レビュー登録
     public String create(@ModelAttribute @Validated ReviewInputForm reviewInputForm,BindingResult bindingResult, RedirectAttributes redirectAttriburtes) {
     	if(bindingResult.hasErrors()) {
     		return "review/input";
@@ -109,19 +109,19 @@ public class ReviewController {
     	reviewService.create(reviewInputForm);
     	redirectAttriburtes.addAttribute("successMessage", "レビューを登録しました");
     	
-    	return "redirect:/review";
+    	return "redirect:/restaurants/{id}";
     }
     
-    @PostMapping("/review/restaurants/review/update") //レビュー編集
-    public String update(@ModelAttribute @Validated ReviewEditForm reviewEditForm,BindingResult bindingResult, RedirectAttributes redirectAttriburtes) {
+    @PostMapping("/restaurants/{id}/review/{reviewId}/update") //レビュー編集
+    public String update(@PathVariable(name = "id") Integer id, @PathVariable(name = "reviewId") Integer reviewId, @ModelAttribute @Validated ReviewEditForm reviewEditForm,BindingResult bindingResult,RedirectAttributes redirectAttributes) {
     	if(bindingResult.hasErrors()) {
     		return "review/edit";
     	}
     	
     	reviewService.update(reviewEditForm);
-    	redirectAttriburtes.addAttribute("successMessage", "レビューを更新しました");
+    	redirectAttributes.addAttribute("successMessage", "レビューを更新しました");
     	
-    	return "redirect:/edit";
+    	return "redirect:/restaurants/{id}";
     }
     
  
