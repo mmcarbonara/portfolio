@@ -128,7 +128,9 @@ public class AdminRestaurantController {
     
     @PostMapping("/{id}/delete") //削除用モーダル
     public String delete(@PathVariable(name = "id") Integer id, RedirectAttributes redirectAttributes) {
-    	restaurantRepository.deleteById(id);
+    	restaurantRepository.deleteById(id);  //関連する予約の削除
+    	restaurantRepository.deleteById(id);  //予約の削除(AI先生の追加)
+    	
     	
     	redirectAttributes.addFlashAttribute("successMessage", "店舗を削除しました");
     	
