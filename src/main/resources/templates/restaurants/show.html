@@ -193,8 +193,9 @@
 														<!--名前の表示OK-->
 														<h3 class="font-weight-bold" th:text="${review.getUser().getName()}"></h3>
 															
-													     <!--現在ログインしているユーザーとレビューの投稿者が一致であれば編集と削除を表示させる-->
-														 <div th:if="${#authentication.principal.user.id == review.getUser().getId()}">
+													     <!--現在ログインしているユーザーとレビューの投稿者が一致であれば編集と削除を表示させる
+														 <div th:if="${#authentication.principal.user.id == review.getUser().getId()}">-->
+													　　　<div sec:authorize="isAuthenticated()" th:if="${#authentication.principal.user.id == review.getUser().getId()}">
 															  <a th:href="@{/review/restaurants/__${restaurants.getId()}__/review/__${review.getId()}__/edit}" class="me-2">編集</a>
 															  <a href="#" class="nagoyameshi-link-danger" data-bs-toggle="modal" th:data-bs-target="${'#deleteReviewModal' + restaurants.getId()}">削除</a>
 														 

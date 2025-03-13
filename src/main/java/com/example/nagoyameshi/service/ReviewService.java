@@ -1,9 +1,10 @@
-package com.example.nagoyameshi.service;
-
+package com.example.nagoyameshi.service; 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.nagoyameshi.entity.Restaurants;
 import com.example.nagoyameshi.entity.Review;
+import com.example.nagoyameshi.entity.User;
 import com.example.nagoyameshi.form.ReviewEditForm;
 import com.example.nagoyameshi.form.ReviewInputForm;
 import com.example.nagoyameshi.repository.ReviewRepository;
@@ -17,14 +18,15 @@ public class ReviewService {
     }
     
     @Transactional  //レビューの登録機能
-    public void create(ReviewInputForm reviewInputForm) {
-    Review review = reviewRepository.getReferenceById(reviewInputForm.getRestaurantId());
-    Review restaurantId = reviewRepository.getReferenceById(reviewInputForm.getRestaurantId());
+    public void create(Restaurants restaurants, User user, ReviewInputForm reviewInputForm) {
+    	Review review = new Review();
     
-    review.setScore(reviewInputForm.getScore());
-    review.setContent(reviewInputForm.getContent());
-
-    reviewRepository.save(review);
+	    review.setRestaurant(restaurants);
+	    review.setUser(user);
+	    review.setScore(reviewInputForm.getScore());
+	    review.setContent(reviewInputForm.getContent());
+	
+	    reviewRepository.save(review);
     }
     
     @Transactional  //レビューの編集機能

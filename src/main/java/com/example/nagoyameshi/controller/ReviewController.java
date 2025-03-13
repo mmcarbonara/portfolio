@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,11 +20,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.nagoyameshi.entity.Restaurants;
 import com.example.nagoyameshi.entity.Review;
+import com.example.nagoyameshi.entity.User;
 import com.example.nagoyameshi.form.ReviewEditForm;
 import com.example.nagoyameshi.form.ReviewInputForm;
 import com.example.nagoyameshi.repository.RestaurantRepository;
 import com.example.nagoyameshi.repository.ReviewRepository;
+import com.example.nagoyameshi.security.UserDetailsImpl;
 import com.example.nagoyameshi.service.ReviewService;
+
 
 @Controller
 @RequestMapping("/review")
@@ -100,14 +104,16 @@ public class ReviewController {
  	  return "redirect:/restaurants/{id}";
     }
     
-    @PostMapping("/restaurants/{id}/review/{reviewId}/create") //レビュー登録
-    public String create(@ModelAttribute @Validated ReviewInputForm reviewInputForm,BindingResult bindingResult, RedirectAttributes redirectAttriburtes) {
+    @PostMapping("/restaurants/{id}/review/create") //レビュー登録
+    public String create(@PathVariable(name = "id") Integer id, @AuthenticationPrincipal UserDetailsImpl userDetailsImpl, @ModelAttribute @Validated ReviewInputForm reviewInputForm,BindingResult bindingResult, RedirectAttributes redirectAttriburtes) {
     	if(bindingResult.hasErrors()) {
     		return "review/input";
     	}
     	
-    	reviewService.create(reviewInputForm);
-    	redirectAttriburtes.addAttribute("successMessage", "レビューを登録しました");
+    	Restaurants restaurants = restaurantRepository.getReferenceById(id);
+    	User user = userDetailsImpl.getUser();
+    	reviewService.create(restaurants, user, reviewInputForm);
+    	redirectAttriburtes.addFlashAttribute("successMessage", "レビューを登録しました");
     	
     	return "redirect:/restaurants/{id}";
     }
@@ -119,7 +125,7 @@ public class ReviewController {
     	}
     	
     	reviewService.update(reviewEditForm);
-    	redirectAttributes.addAttribute("successMessage", "レビューを更新しました");
+    	redirectAttributes.addFlashAttribute("successMessage", "レビューを更新しました");
     	
     	return "redirect:/restaurants/{id}";
     }

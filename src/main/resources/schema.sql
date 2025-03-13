@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS reservations (
     number_of_people INT,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (restaurant_id) REFERENCES restaurants(id),
+    FOREIGN KEY (restaurant_id) REFERENCES restaurants(id) ON DELETE CASCADE ,
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
